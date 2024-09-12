@@ -2,6 +2,7 @@ streamlit==1.27.2
 sympy
 pandas
 numpy
+plotly
 seaborn
 pingouin
 streamlit_folium
