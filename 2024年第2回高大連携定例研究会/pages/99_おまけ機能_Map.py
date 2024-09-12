@@ -12,7 +12,11 @@ map = folium.Map(location=[36.53183045, 136.6286506],zoom_start = 18)
 
 
 #地図上に表示する情報の取得
-df = pd.read_csv('sample_datas/Raw_Data.csv')
+try :
+    df = pd.read_csv('sample_datas/Raw_Data.csv')
+except:
+    df = pd.read_csv('2024年第2回高大連携定例研究会/sample_datas/Raw_Data.csv')
+
 df_key_list = df.keys()
 
 # dfから１行ずつデータを取得し，その情報を地図上のマーカーに記載
