@@ -1,0 +1,8 @@
+sympy
+pandas
+numpy
+seaborn
+pingouin
+itertools
+streamlit_folium
+folium
