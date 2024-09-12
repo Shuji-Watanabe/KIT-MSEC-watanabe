@@ -32,7 +32,11 @@ if tub_dict[selected_cbox] == 0 :
     # データの読み込み
     if select_data_dict[select_str] == 0:
         #デモデータ『hist_data01.csv』の読み込み 
-        read_data_df = pd.read_csv("sample_datas/scatter_data01.csv",encoding='shift_jis')
+        try :
+            read_data_df = pd.read_csv("sample_datas/scatter_data01.csv",encoding='shift_jis')
+        except:
+            read_data_df = pd.read_csv("2024年第2回高大連携定例研究会/sample_datas/scatter_data01.csv",encoding='shift_jis')
+        
     else :
         st.stop()
 

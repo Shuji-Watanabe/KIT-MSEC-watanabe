@@ -26,7 +26,11 @@ if tub_dict[selected_cbox] == 0 :
 
     check_num  = 0
     if select_data_dict[select_str] == 0:
-        data_df = pd.read_csv("sample_datas/cross_data01.csv",encoding='shift_jis')
+        try :
+            data_df = pd.read_csv("sample_datas/cross_data01.csv",encoding='shift_jis')
+        except:
+            data_df = pd.read_csv("2024年第2回高大連携定例研究会/sample_datas/cross_data01.csv",encoding='shift_jis')
+
         check_num = 1
 
 
