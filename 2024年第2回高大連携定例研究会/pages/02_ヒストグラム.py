@@ -19,7 +19,7 @@ if tub_dict[selected_cbox] == 0 :
     """
     ### 1. 分析データの選択
     """
-    select_data_dict = {"デモデータ1 正規分布に従うデータ":0}
+    select_data_dict = {"デモデータ１：正規分布に従うデータ":0}
     # 分析データの選択
     select_str = st.selectbox("分析に使用するデータを選択してください．",select_data_dict.keys(),key="mselect 01")
 
@@ -51,8 +51,8 @@ if tub_dict[selected_cbox] == 0 :
             st.success(f'準備完了', icon="✅")
             data_df = read_data_df[index_str]
             data_len = data_df.shape[0]
-    st.write("")
-    st.dataframe(data_df)
+    if st.checkbox("データの確認",key="cbox 01"):
+        st.dataframe(data_df)
     """___"""
 
 
@@ -92,7 +92,7 @@ if tub_dict[selected_cbox] == 0 :
     ax = data_df.plot.hist(bins=bin_num,rwidth=0.9)
     st.pyplot(ax.figure)
 
-
+#===============================================================================================
 ###  ユーザーデータによる分析体験
 elif tub_dict[selected_cbox] == 1 :
     tub_counta +=1 
@@ -123,8 +123,8 @@ elif tub_dict[selected_cbox] == 1 :
             st.success(f'準備完了', icon="✅")
             data_df = read_data_df[index_str]
             data_len = data_df.shape[0]
-    st.write("")
-    st.dataframe(data_df)
+    if st.checkbox("データの確認",key="cbox 02"):
+        st.dataframe(data_df)
     """___"""
     """
     

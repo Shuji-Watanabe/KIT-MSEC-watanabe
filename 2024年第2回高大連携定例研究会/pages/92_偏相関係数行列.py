@@ -72,7 +72,6 @@ if tub_dict[selected_cbox] == 0 :
     if st.button("相関係数行列の作成",key="button 01"):
         with st.spinner('作成中'):
             partial_corr_matrix = pg.pcorr(data_df)
-            st.dataframe(partial_corr_matrix)
             col_user = st.columns([2,1])
             with col_user[0]:
                 st.dataframe(partial_corr_matrix)
@@ -149,7 +148,6 @@ elif tub_dict[selected_cbox] == 1 :
     if st.button("相関係数行列の作成",key="button 02"):
         with st.spinner('作成中'):
             partial_corr_matrix = pg.pcorr(data_df)
-            st.dataframe(partial_corr_matrix)
             col_user = st.columns([2,1])
             with col_user[0]:
                 st.dataframe(partial_corr_matrix)

@@ -71,7 +71,6 @@ if tub_dict[selected_cbox] == 0 :
     if st.button("相関係数行列の作成",key="button 01"):
         with st.spinner('作成中'):
             corr_matrix_pearson = data_df.corr('pearson')
-            st.dataframe(corr_matrix_pearson)
             col_user = st.columns([2,1])
             with col_user[0]:
                 st.dataframe(corr_matrix_pearson)
