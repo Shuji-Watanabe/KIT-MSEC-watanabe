@@ -142,8 +142,12 @@ elif tub_dict[selected_cbox] == 1 :
     if st.button("相関係数行列の作成",key="button 02"):
         with st.spinner('作成中'):
             corr_matrix_pearson = data_df.corr('pearson')
-            st.dataframe(corr_matrix_pearson)
-            
+            col_user = st.columns([2,1])
+            with col_user[0]:
+                st.dataframe(corr_matrix_pearson)
+            with col_user[1]:
+                downloadfile_csv = corr_matrix_pearson.to_csv().encode('shift_jis')
+                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="outfile_cross.csv",mime="text/csv")
             corrs_list = []
             tmp_list_index = itertools.combinations(index_str, 2)
             for label in tmp_list_index:
@@ -154,10 +158,6 @@ elif tub_dict[selected_cbox] == 1 :
             tmp_corrs_df = tmp_corrs_df.sort_values("corr.",ascending=False)
             tmp_corrs_df["Explanetion"] = [libraries.display.explanation_corr(x) for x in tmp_corrs_df["corr."] ]
             
-            col_user = st.columns([2,1])
-            with col_user[0]:
-                with st.expander("相関係数の解釈"):
-                    st.dataframe(tmp_corrs_df)
-            with col_user[1]:
-                downloadfile_csv = corr_matrix_pearson.to_csv().encode('shift_jis')
-                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="outfile_cross.csv",mime="text/csv")
+
+            with st.expander("相関係数の解釈"):
+                st.dataframe(tmp_corrs_df)
