@@ -73,7 +73,13 @@ if tub_dict[selected_cbox] == 0 :
         with st.spinner('作成中'):
             partial_corr_matrix = pg.pcorr(data_df)
             st.dataframe(partial_corr_matrix)
-            
+            col_user = st.columns([2,1])
+            with col_user[0]:
+                st.dataframe(partial_corr_matrix)
+            with col_user[1]:
+                downloadfile_csv = partial_corr_matrix.to_csv().encode('shift_jis')
+                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="partial_corr_matrix.csv",mime="text/csv")
+
             corrs_list = []
             tmp_list_index = itertools.combinations(index_str, 2)
             for label in tmp_list_index:
@@ -114,7 +120,7 @@ elif tub_dict[selected_cbox] == 1 :
     keys_list = list(read_data_df.keys())
     input_col = st.columns([1,1])
     with input_col[0]:
-        index_str = st.multiselect("ピアソンの積率相関係数を計算するデータの選択",keys_list,key="mselect 03")
+        index_str = st.multiselect("相関係数行列を計算するデータの選択",keys_list,key="mselect 03")
     with input_col[1]:
         if not index_str:
             """"""
@@ -138,13 +144,19 @@ elif tub_dict[selected_cbox] == 1 :
 
 
     """
-    ### 2. ピアソンの積率相関係数による相関係数行列の作成
+    ### 2. 相関係数行列の作成
     """
     if st.button("相関係数行列の作成",key="button 02"):
         with st.spinner('作成中'):
             partial_corr_matrix = pg.pcorr(data_df)
             st.dataframe(partial_corr_matrix)
-            
+            col_user = st.columns([2,1])
+            with col_user[0]:
+                st.dataframe(partial_corr_matrix)
+            with col_user[1]:
+                downloadfile_csv = partial_corr_matrix.to_csv().encode('shift_jis')
+                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="partial_corr_matrix.csv",mime="text/csv")
+
             corrs_list = []
             tmp_list_index = itertools.combinations(index_str, 2)
             for label in tmp_list_index:

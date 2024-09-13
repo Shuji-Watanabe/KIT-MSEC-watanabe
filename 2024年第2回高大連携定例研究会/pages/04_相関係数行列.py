@@ -72,7 +72,12 @@ if tub_dict[selected_cbox] == 0 :
         with st.spinner('作成中'):
             corr_matrix_pearson = data_df.corr('pearson')
             st.dataframe(corr_matrix_pearson)
-            
+            col_user = st.columns([2,1])
+            with col_user[0]:
+                st.dataframe(corr_matrix_pearson)
+            with col_user[1]:
+                downloadfile_csv = corr_matrix_pearson.to_csv().encode('shift_jis')
+                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="outfile_corr_matrix.csv",mime="text/csv")
             corrs_list = []
             tmp_list_index = itertools.combinations(index_str, 2)
             for label in tmp_list_index:
@@ -147,7 +152,7 @@ elif tub_dict[selected_cbox] == 1 :
                 st.dataframe(corr_matrix_pearson)
             with col_user[1]:
                 downloadfile_csv = corr_matrix_pearson.to_csv().encode('shift_jis')
-                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="outfile_cross.csv",mime="text/csv")
+                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="outfile_corr_matrix.csv",mime="text/csv")
             corrs_list = []
             tmp_list_index = itertools.combinations(index_str, 2)
             for label in tmp_list_index:
