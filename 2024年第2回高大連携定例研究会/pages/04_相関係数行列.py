@@ -24,7 +24,7 @@ if tub_dict[selected_cbox] == 0 :
     ### 1. 分析データの選択
     """
     
-    select_data_dict = {"デモデータ１:ピアソンの積率相関係数用データ":0}
+    select_data_dict = {"デモデータ１:相関係数用データ":0}
     # 分析データの選択
     select_str = st.selectbox("分析に使用するデータを選択してください．",select_data_dict.keys(),key="mselect 01")
 
@@ -44,7 +44,7 @@ if tub_dict[selected_cbox] == 0 :
     keys_list = list(read_data_df.keys())
     input_col = st.columns([1,1])
     with input_col[0]:
-        index_str = st.multiselect("ピアソンの積率相関係数を計算するデータの選択",keys_list,key="mselect 02")
+        index_str = st.multiselect("相関係数行列を計算するデータの選択",keys_list,key="mselect 02")
     with input_col[1]:
         if not index_str:
             """"""
@@ -66,7 +66,7 @@ if tub_dict[selected_cbox] == 0 :
 
 
     """
-    ### 2. ピアソンの積率相関係数による相関係数行列の作成
+    ### 2. 相関係数行列の作成
     """
     if st.button("相関係数行列の作成",key="button 01"):
         with st.spinner('作成中'):
@@ -113,7 +113,7 @@ elif tub_dict[selected_cbox] == 1 :
     keys_list = list(read_data_df.keys())
     input_col = st.columns([1,1])
     with input_col[0]:
-        index_str = st.multiselect("ピアソンの積率相関係数を計算するデータの選択",keys_list,key="mselect 03")
+        index_str = st.multiselect("相関係数行列を計算するデータの選択",keys_list,key="mselect 03")
     with input_col[1]:
         if not index_str:
             """"""
@@ -137,7 +137,7 @@ elif tub_dict[selected_cbox] == 1 :
 
 
     """
-    ### 2. ピアソンの積率相関係数による相関係数行列の作成
+    ### 2. 相関係数行列の作成
     """
     if st.button("相関係数行列の作成",key="button 02"):
         with st.spinner('作成中'):
@@ -154,5 +154,10 @@ elif tub_dict[selected_cbox] == 1 :
             tmp_corrs_df = tmp_corrs_df.sort_values("corr.",ascending=False)
             tmp_corrs_df["Explanetion"] = [libraries.display.explanation_corr(x) for x in tmp_corrs_df["corr."] ]
             
-            with st.expander("相関係数の解釈"):
-                st.dataframe(tmp_corrs_df)
+            col_user = st.columns([2,1])
+            with col_user[0]:
+                with st.expander("相関係数の解釈"):
+                    st.dataframe(tmp_corrs_df)
+            with col_user[1]:
+                downloadfile_csv = corr_matrix_pearson.to_csv().encode('shift_jis')
+                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="outfile_cross.csv",mime="text/csv")
