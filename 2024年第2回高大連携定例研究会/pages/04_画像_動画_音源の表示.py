@@ -48,7 +48,7 @@ disp_col1 = st.columns([1,1,1])
 # 画面左側 に表示させる内容
 with disp_col1[0]:
     #st: st.imageによる画像の表示
-    st.image(image_path1,caption="夏の海")
+    st.image(image_path1)
     """説明： 旅行先の風景 """
 
 # 画面中央 に表示させる内容
