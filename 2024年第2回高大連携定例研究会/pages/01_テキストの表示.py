@@ -14,7 +14,7 @@ _streamlit_ でテキストの修飾を行いたい場合，基本的には
 """
 
 #st: st.header を利用した見出し表示
-st.header("st.title を利用した見出し",divider='rainbow')
+st.header("1. st.title を利用した見出し",divider='rainbow')
 
 #st: Magic commandを利用したテキスト表示
 """
@@ -36,7 +36,7 @@ if st.checkbox("ソースコード表示",key="titile_code_disp") :
 """___"""
 
 #st: st.header を利用した見出し表示
-st.header("Magic commandを利用した見出し",divider='rainbow')
+st.header("2. Magic commandを利用した見出し",divider='rainbow')
 
 #st: Magic commandを利用したテキスト表示
 """
