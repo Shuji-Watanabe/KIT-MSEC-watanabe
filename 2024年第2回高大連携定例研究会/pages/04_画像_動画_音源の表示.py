@@ -28,11 +28,12 @@ st.header("1. st.image を利用した画像の表示方法",divider='rainbow')
 
 #ファイルパスの設定
 # `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
+from PIL import Image
 try :
-    image_path1 = "media/sample_im01.jpeg"
+    image_path1 = Image.open("2024年第2回高大連携定例研究会/media/sample_im01.jpeg")
 except :
-    image_path1 = "2024年第2回高大連携定例研究会/media/sample_im01.jpeg"
-
+    image_path1 = Image.open("media/sample_im01.jpeg")
+    # image_path1 = "media/sample_im01.jpeg"
 try :
     image_path2 = "media/sample_im02.jpeg"
 except :
