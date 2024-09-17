@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-"""## ヒストグラム"""
+"""# ヒストグラム"""
 tub_dict = {"デモデータによる分析体験":0,"ユーザーデータによる分析":1}
 selected_cbox = st.radio(label="選択", options = tub_dict.keys(),horizontal=True)
 """___"""
@@ -78,18 +78,16 @@ if tub_dict[selected_cbox] == 0 :
         disp_col1[1].metric(label="合計",value=sum_f)
         disp_col1[2].metric(label="最大値",value=max_f)
         disp_col1[3].metric(label="最小値",value=min_f)
-
+        """___"""
         disp_col2 = st.columns(4)
         disp_col2[0].metric(label="平均 ",value=f"{mean_f:4.1f}")
         disp_col2[1].metric(label="標準偏差",value=f"{stdev_f:4.1f}")
-
+        """___"""
         disp_col3 = st.columns(4)
         disp_col3[0].metric(label="中央値 ",value=f"{med_f:4.1f}")
         disp_col3[1].metric(label="第一四分位数",value=f"{float(quantile_list[0.25]):4.1f}")
         disp_col3[2].metric(label="第二四分位数",value=f"{float(quantile_list[0.5]):4.1f}")
         disp_col3[3].metric(label="第三四分位数",value=f"{float(quantile_list[0.75]):4.1f}")
-
-
         """___"""
 
 

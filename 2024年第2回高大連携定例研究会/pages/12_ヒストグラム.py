@@ -5,7 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-"""## ヒストグラム"""
+"""# ヒストグラム"""
 tub_dict = {"デモデータによる分析体験":0,"ユーザーデータによる分析":1}
 selected_cbox = st.radio(label="選択", options = tub_dict.keys(),horizontal=True)
 """___"""
@@ -91,6 +91,7 @@ if tub_dict[selected_cbox] == 0 :
     # ヒストグラムの作成
     ax = data_df.plot.hist(bins=bin_num,rwidth=0.9)
     st.pyplot(ax.figure)
+    
 
 #===============================================================================================
 ###  ユーザーデータによる分析体験

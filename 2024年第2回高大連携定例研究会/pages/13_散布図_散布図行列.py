@@ -4,7 +4,7 @@ import numpy as np
 import seaborn as sns
 
 
-"""## 散布図行列"""
+"""# 散布図行列"""
 tub_dict = {"デモデータによる分析体験":0,"ユーザーデータによる分析":1}
 selected_cbox = st.radio(label="選択", options = tub_dict.keys(),horizontal=True)
 """___"""

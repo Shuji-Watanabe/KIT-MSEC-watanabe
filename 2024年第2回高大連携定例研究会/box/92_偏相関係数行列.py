@@ -2,12 +2,12 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import pingouin as pg
 import itertools
 
-import libraries
-import libraries.display 
-
-"""## 相関係数行列"""
+#自作ライブラリ
+import lib.display
+"""## 偏相関係数行列"""
 
 tub_dict = {"デモデータによる分析体験":0,"ユーザーデータによる分析":1}
 selected_cbox = st.radio(label="選択", options = tub_dict.keys(),horizontal=True)
@@ -24,7 +24,7 @@ if tub_dict[selected_cbox] == 0 :
     ### 1. 分析データの選択
     """
     
-    select_data_dict = {"デモデータ１:相関係数用データ":0}
+    select_data_dict = {"デモデータ１:偏相関係数用データ":0}
     # 分析データの選択
     select_str = st.selectbox("分析に使用するデータを選択してください．",select_data_dict.keys(),key="mselect 01")
 
@@ -36,6 +36,7 @@ if tub_dict[selected_cbox] == 0 :
             read_data_df = pd.read_csv("sample_datas/scatter_data01.csv",encoding='shift_jis')
         except:
             read_data_df = pd.read_csv("2024年第2回高大連携定例研究会/sample_datas/scatter_data01.csv",encoding='shift_jis')
+        
     else :
         st.stop()
 
@@ -44,7 +45,7 @@ if tub_dict[selected_cbox] == 0 :
     keys_list = list(read_data_df.keys())
     input_col = st.columns([1,1])
     with input_col[0]:
-        index_str = st.multiselect("相関係数行列を計算するデータの選択",keys_list,key="mselect 02")
+        index_str = st.multiselect("偏相関係数行列の計算に使用するデータの選択",keys_list,key="mselect 02")
     with input_col[1]:
         if not index_str:
             """"""
@@ -66,28 +67,29 @@ if tub_dict[selected_cbox] == 0 :
 
 
     """
-    ### 2. 相関係数行列の作成
+    ### 2. 偏相関係数行列の作成
     """
     if st.button("相関係数行列の作成",key="button 01"):
         with st.spinner('作成中'):
-            corr_matrix_pearson = data_df.corr('pearson')
+            partial_corr_matrix = pg.pcorr(data_df)
             col_user = st.columns([2,1])
             with col_user[0]:
-                st.dataframe(corr_matrix_pearson)
+                st.dataframe(partial_corr_matrix)
             with col_user[1]:
-                downloadfile_csv = corr_matrix_pearson.to_csv().encode('shift_jis')
-                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="outfile_corr_matrix.csv",mime="text/csv")
+                downloadfile_csv = partial_corr_matrix.to_csv().encode('shift_jis')
+                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="partial_corr_matrix.csv",mime="text/csv")
+
             corrs_list = []
             tmp_list_index = itertools.combinations(index_str, 2)
             for label in tmp_list_index:
                 label_list = list(label)
-                corrs_list.append([label_list[0],label_list[1],pd.DataFrame(corr_matrix_pearson).at[label_list[0],label_list[1]]])
+                corrs_list.append([label_list[0],label_list[1],pd.DataFrame(partial_corr_matrix).at[label_list[0],label_list[1]]])
                 
             tmp_corrs_df = pd.DataFrame(corrs_list,columns=["label 1","label 2","corr."])
             tmp_corrs_df = tmp_corrs_df.sort_values("corr.",ascending=False)
-            tmp_corrs_df["Explanetion"] = [libraries.display.explanation_corr(x) for x in tmp_corrs_df["corr."] ]
+            tmp_corrs_df["Explanetion"] = [lib.display.explanation_corr(x) for x in tmp_corrs_df["corr."] ]
             
-            with st.expander("相関係数の解釈"):
+            with st.expander("偏相関係数の解釈"):
                 st.dataframe(tmp_corrs_df)
     else:
         """___"""
@@ -145,23 +147,23 @@ elif tub_dict[selected_cbox] == 1 :
     """
     if st.button("相関係数行列の作成",key="button 02"):
         with st.spinner('作成中'):
-            corr_matrix_pearson = data_df.corr('pearson')
+            partial_corr_matrix = pg.pcorr(data_df)
             col_user = st.columns([2,1])
             with col_user[0]:
-                st.dataframe(corr_matrix_pearson)
+                st.dataframe(partial_corr_matrix)
             with col_user[1]:
-                downloadfile_csv = corr_matrix_pearson.to_csv().encode('shift_jis')
-                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="outfile_corr_matrix.csv",mime="text/csv")
+                downloadfile_csv = partial_corr_matrix.to_csv().encode('shift_jis')
+                st.download_button(label="結果のダウンロード",data=downloadfile_csv ,file_name="partial_corr_matrix.csv",mime="text/csv")
+
             corrs_list = []
             tmp_list_index = itertools.combinations(index_str, 2)
             for label in tmp_list_index:
                 label_list = list(label)
-                corrs_list.append([label_list[0],label_list[1],pd.DataFrame(corr_matrix_pearson).at[label_list[0],label_list[1]]])
+                corrs_list.append([label_list[0],label_list[1],pd.DataFrame(partial_corr_matrix).at[label_list[0],label_list[1]]])
                 
             tmp_corrs_df = pd.DataFrame(corrs_list,columns=["label 1","label 2","corr."])
             tmp_corrs_df = tmp_corrs_df.sort_values("corr.",ascending=False)
-            tmp_corrs_df["Explanetion"] = [libraries.display.explanation_corr(x) for x in tmp_corrs_df["corr."] ]
+            tmp_corrs_df["Explanetion"] = [lib.display.explanation_corr(x) for x in tmp_corrs_df["corr."] ]
             
-
-            with st.expander("相関係数の解釈"):
+            with st.expander("偏相関係数の解釈"):
                 st.dataframe(tmp_corrs_df)
