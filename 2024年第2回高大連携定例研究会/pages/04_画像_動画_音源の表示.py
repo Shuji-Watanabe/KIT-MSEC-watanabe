@@ -1,5 +1,8 @@
 import streamlit as st
+import os 
 
+path = os.getcwd()
+st.write(path )
 #st: st.title を利用したテキスト表示
 st.title("メディアデータの表示方法")
 #st: Magic commandを利用したテキスト表示（Markdownのリンクや箇条書きの書き方を使用）
@@ -30,19 +33,15 @@ st.header("1. st.image を利用した画像の表示方法",divider='rainbow')
 # `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
 from PIL import Image
 try :
-    image_path1 = Image.open("2024年第2回高大連携定例研究会/media/sample_im01.jpeg")
-except :
     image_path1 = Image.open("media/sample_im01.jpeg")
-    # image_path1 = "media/sample_im01.jpeg"
-try :
-    image_path2 = "media/sample_im02.jpeg"
+    image_path2 = Image.open("media/sample_im02.jpeg")
+    image_path3 = Image.open("media/sample_im03.jpeg")
 except :
-    image_path2 = "2024年第2回高大連携定例研究会/media/sample_im02.jpeg"
+    image_path1 = Image.open("2024年第2回高大連携定例研究会/media/sample_im01.jpeg")
+    image_path2 = Image.open("2024年第2回高大連携定例研究会/media/sample_im02.jpeg")
+    image_path3 = Image.open("2024年第2回高大連携定例研究会/media/sample_im03.jpeg")
 
-try :
-    image_path3 = "media/sample_im03.jpeg"
-except :
-    image_path3 = "2024年第2回高大連携定例研究会/media/sample_im03.jpeg"
+
 #st: st.columnsによる画面の3分割
 # 2:1:1での分割は st.columns([2,1,1]) とする．
 disp_col1 = st.columns([1,1,1])
