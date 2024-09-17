@@ -8,7 +8,7 @@ st.title("データの表示方法")
 
 #st: Magic commandを利用したテキスト表示（Markdownのリンクや箇条書きの書き方を使用）
 """
-ここでは，PandasのSeriesやDataFrameのような配列データを表示させる方法を説明します．
+ここでは，PandasのSeriesやDataFrameのような配列データを表示させる方法を紹介します．
 なお，numpyのarray形式のデータも同様に表示することができます．
 
 __参考資料__
