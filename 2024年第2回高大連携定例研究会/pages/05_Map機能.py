@@ -49,6 +49,8 @@ folium.Marker(
 # mapに記された情報をstreanlit上に表示
 st_folium(map)
 
+
+""" CHeck"""
 if st.checkbox("ソースコード表示",key="show_code_disp1") :
     """"""
     st.code("""
@@ -141,5 +143,6 @@ line1 = folium.PolyLine(linedata_list , weight=5, color="#0000ff").add_to(map)
 """
 #### 散歩中の位置情報と移動経路
 """
+
 #　mapに格納された情報をstreamlit上に表示
 folium_static(map)
