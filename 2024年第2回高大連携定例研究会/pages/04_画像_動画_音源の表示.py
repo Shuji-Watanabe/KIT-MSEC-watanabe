@@ -20,7 +20,7 @@ __参考資料__
 #st: st.header を利用した見出し表示
 st.header("1. st.image を利用した画像の表示方法",divider='rainbow')
 
-st.stop()
+
 #st: Magic commandを利用したテキスト表示
 """
 `st.image` を利用し，写真や画像を表示させることができます．`st.columns`と組み合わせることで，様々なレイアウトが可能です．
