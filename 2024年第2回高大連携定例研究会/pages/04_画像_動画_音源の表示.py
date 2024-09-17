@@ -33,9 +33,9 @@ try :
     image_path2 = "media/sample_im02.jpeg"
     image_path3 = "media/sample_im03.jpeg"
 except :
-    image_path1 = "KIT-MSEC-watanabe/2024年第2回高大連携定例研究会/media/sample_im01.jpeg"
-    image_path2 = "KIT-MSEC-watanabe/2024年第2回高大連携定例研究会/media/sample_im02.jpeg"
-    image_path3 = "KIT-MSEC-watanabe/2024年第2回高大連携定例研究会/media/sample_im03.jpeg"
+    image_path1 = "2024年第2回高大連携定例研究会/media/sample_im01.jpeg"
+    image_path2 = "2024年第2回高大連携定例研究会/media/sample_im02.jpeg"
+    image_path3 = "2024年第2回高大連携定例研究会/media/sample_im03.jpeg"
 #st: st.columnsによる画面の3分割
 # 2:1:1での分割は st.columns([2,1,1]) とする．
 disp_col1 = st.columns([1,1,1])
