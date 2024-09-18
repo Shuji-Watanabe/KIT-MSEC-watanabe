@@ -143,7 +143,7 @@ line1 = folium.PolyLine(linedata_list , weight=5, color="#0000ff").add_to(map)
 #　mapに格納された情報をstreamlit上に表示
 folium_static(map)
 
-if st.checkbox("ソースコード表示",key="show_code_disp1") :
+if st.checkbox("ソースコード表示",key="show_code_disp2") :
     """"""
     st.code("""
             #地図上に表示する情報の取得（GPSデータの読み込み）
