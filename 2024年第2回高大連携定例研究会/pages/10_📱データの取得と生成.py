@@ -80,8 +80,10 @@ else :
         data_file = open(str(file_path))
         st.download_button(label="結果のダウンロード",data=data_file ,file_name="download_datafile.csv",mime="text/csv")
 
+""" """
+""" """
 ### サンプルデータの生成 ###
-st.header("1. 分析用デモデータの生成",divider="rainbow")
+st.header("2. 分析用デモデータの生成",divider="rainbow")
 np.set_printoptions(precision=5)
 
 # type_dict = {"一様分布に従うデータ":0
