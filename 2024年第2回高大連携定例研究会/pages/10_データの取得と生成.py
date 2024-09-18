@@ -4,16 +4,25 @@ import numpy as np
 import os 
 path = os.getcwd()
 
-
-def data_download(data_array):
-    bin_num = int(1 + np.log2(len(data_array)))
-    df = pd.DataFrame(data=data_array,columns=[tmp_col_name])
-    ax = df.plot.hist(bins=bin_num,rwidth=0.9)
+#### データの作成とその表示
+def data_download(index, data_array,ntri=10):
+    if index == 2:
+        df = pd.DataFrame(data=data_array,columns=[tmp_col_name])
+        freq, _ = np.histogram(data_array, bins=ntri+1, range=(0, ntri))
+        tmp_index = [ num for num in range(0,ntri+1,1)]
+        tmp_df = pd.DataFrame({'number of trials':tmp_index,'freq': freq, 'rfreq': freq / ntri})
+        # st.dataframe(tmp_df)
+        ax = tmp_df.plot(x='number of trials',y='rfreq')
+        # ax = tmp_df["rfreq"].plot.bar()
+    else:
+        bin_num = int(1 + np.log2(len(data_array)))
+        df = pd.DataFrame(data=data_array,columns=[tmp_col_name])
+        ax = df.plot.hist(bins=bin_num,rwidth=0.9)
     return df, ax 
 
-def disp_function(tmp_array):
+def disp_function(index,tmp_array,ntri=10):
     if st.button("生成されたデータの表示"):
-            data_df , ax  = data_download(tmp_array)
+            data_df , ax  = data_download(index,tmp_array,ntri)
             tmp_result_col = st.columns([2,1])
             with tmp_result_col[0]:
                 st.pyplot(ax.figure) 
@@ -22,7 +31,7 @@ def disp_function(tmp_array):
                 data_file = data_df.to_csv().encode('shift_jis')
                 st.download_button(label="結果のダウンロード",data=data_file ,file_name="download_data.csv",mime="text/csv")
 
-
+##### 本文
 """# データの取得と生成"""
 """
 ここでは，このWebアプリで使用しているデータのダウンロードと，
@@ -75,8 +84,14 @@ else :
 st.header("1. 分析用デモデータの生成",divider="rainbow")
 np.set_printoptions(precision=5)
 
+# type_dict = {"一様分布に従うデータ":0
+#              ,"正規分布に従うデータ":1
+#              ,"二項分布":2
+#              }
+
 type_dict = {"一様分布に従うデータ":0
-             ,"正規分布に従うデータ":1}
+             ,"正規分布に従うデータ":1
+             }
 
 type_keys = type_dict.keys()
 selected_type = st.selectbox(label="生成するデータの分布をしていしてください．",options=type_keys)
@@ -99,7 +114,7 @@ if selected_type_index == 0:
         tmp_col_name = str(st.text_input("データ名",value="data 1"))
     if tmp_index == 0:
         """
-        $~\\text{最小値} \\le x \\le \\text{最大値}~$の範囲の整数を，指定されたデータ数で生成します．
+        $~\\text{最小値} \\le x \\le \\text{最大値}~$の範囲の整数を，一様な確率で，指定されたデータ数で生成します．
         """
         with tmp_col[1]:
             size_int = int(st.text_input(label="データ数",value=10))
@@ -114,7 +129,7 @@ if selected_type_index == 0:
 
     elif tmp_index == 1:
         """
-        データ数で指定された数の実数を$~\\text{最小値} \\le x \\le \\text{最大値}~$の範囲で生成します．
+        $~\\text{最小値} \\le x \\le \\text{最大値}~$の範囲の実数を，一様な確率で，指定されたデータ数で生成します
         """
         with tmp_col[1]:
             size_int = int(st.text_input(label="データ数",value=10))
@@ -127,11 +142,11 @@ if selected_type_index == 0:
             st.error("最小値＜最大値となるように入力してください．")
             st.stop()
         tmp_data_array = np.random.uniform(init_num,end_num,size=size_int)
-    disp_function(tmp_data_array)
+    disp_function(selected_type_index,tmp_data_array)
 
 elif selected_type_index == 1:
     """
-    指定された平均と標準偏差を持つ正規分布に従う数値を，指定されたデータ数で生成します．
+    指定された平均と標準偏差で得られる正規分布に従う数値を，指定されたデータ数で生成します．
     """
     tmp_col = st.columns([1,1,1,1])
     with tmp_col[0]:
@@ -139,9 +154,28 @@ elif selected_type_index == 1:
     with tmp_col[1]:
         size_int = int(st.text_input(label="データ数",value=10))
     with tmp_col[2]: 
-        mean_num = int(st.text_input(label="平均",value=0))
+        mean_num = float(st.text_input(label="平均",value=0))
     with tmp_col[3]: 
-        std_num = int(st.text_input(label="標準偏差",value=1))
+        std_num = float(st.text_input(label="標準偏差",value=1))
     tmp_data_array = np.random.normal(mean_num,std_num,size_int)
-    disp_function(tmp_data_array)
+    disp_function(selected_type_index,tmp_data_array)
+
+elif selected_type_index == 2:
+    """
+    指定された試行回数と成功確率で得られる二項分布に従う数値を，指定されたデータ数で生成します．
+    """
+    tmp_col = st.columns([1,1,1,1])
+    with tmp_col[0]:
+        tmp_col_name = str(st.text_input("データ名",value="data 1"))
+    with tmp_col[1]:
+        size_int = int(st.text_input(label="データ数",value=10))
+    with tmp_col[2]: 
+        trials_num = int(st.text_input(label="試行回数",value=10))
+    with tmp_col[3]: 
+        p_num = float(st.text_input(label="成功確率",value=0.5))
+    if 0<= p_num <=1 :
+        tmp_data_array = np.random.binomial(trials_num,p_num,size_int)
+        disp_function(index=selected_type_index,tmp_array=tmp_data_array,ntri=trials_num )
+    else :
+        st.error("成功確率は0から1の範囲で指定してください．")
 
