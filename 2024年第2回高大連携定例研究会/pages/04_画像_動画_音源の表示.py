@@ -1,11 +1,10 @@
 import streamlit as st
-import os 
 
-path = os.getcwd()
-if path == '/mount/src/kit-msec-watanabe':
-    location_str = "github"
-else:
-    location_str = "local"
+from pathlib import Path
+import streamlit as st
+
+image_path = Path(__file__)
+st.write(image_path)
 
 #st: st.title を利用したテキスト表示
 st.title("メディアデータの表示方法")
@@ -33,7 +32,18 @@ st.header("1. st.image を利用した画像の表示方法",divider='rainbow')
 `st.image` を利用し，写真や画像を表示させることができます．`st.columns`と組み合わせることで，様々なレイアウトが可能です．
 """
 
-#ファイルパスの設定
+# ファイルパスの設定
+# StreamlitのCommunity Cloudで使用する場合，ファイルパスが変わるので注意する．
+# os.getcwd()によって得られるpathの変化を利用し，streamlit Community Cloudで実行しているか，手元のPCで実行しているかを
+# 判定しても良い．
+import os 
+path = os.getcwd()
+if path == '/mount/src/kit-msec-watanabe':
+    location_str = "github"
+else:
+    location_str = "local"
+
+
 # `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
 if location_str == 'github' :
     image_path1 = "2024年第2回高大連携定例研究会/media/sample_im01.jpeg"
@@ -68,25 +78,38 @@ with disp_col1[2]:
 if st.checkbox("ソースコード表示",key="data_show_code_disp1") :
     """"""
     st.code("""
-            #ファイルパスの設定
-            # try以下はローカルネットワーク上でアプリを実行するする場合．except以下はStreamlitのCommunity Cloudを利用する場合．
-            try :
-                image_path1 = "media/sample_im01.jpeg"
-                image_path2 = "media/sample_im02.jpeg"
-                image_path3 = "media/sample_im03.jpeg"
-            except :
+            # ファイルパスの設定
+            # StreamlitのCommunity Cloudで使用する場合，ファイルパスが変わるので注意する．
+            # os.getcwd()によって得られるpathの変化を利用し，streamlit Community Cloudで実行しているか，手元のPCで実行しているかを
+            # 判定しても良い．
+            import os 
+            path = os.getcwd()
+            if path == '/mount/src/kit-msec-watanabe':
+                location_str = "github"
+            else:
+                location_str = "local"
+
+
+            # `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
+            if location_str == 'github' :
                 image_path1 = "2024年第2回高大連携定例研究会/media/sample_im01.jpeg"
                 image_path2 = "2024年第2回高大連携定例研究会/media/sample_im02.jpeg"
                 image_path3 = "2024年第2回高大連携定例研究会/media/sample_im03.jpeg"
-                
+            else :
+                image_path1 = "media/sample_im01.jpeg"
+                image_path2 = "media/sample_im02.jpeg"
+                image_path3 = "media/sample_im03.jpeg"
+
+
             #st: st.columnsによる画面の3分割
             # 2:1:1での分割は st.columns([2,1,1]) とする．
             disp_col1 = st.columns([1,1,1])
             # 画面左側 に表示させる内容
             with disp_col1[0]:
                 #st: st.imageによる画像の表示
-                st.image(image_path1,caption="夏の海")
+                st.image(image_path1,caption="クラゲ")
                 \"\"\"説明： 旅行先の風景 \"\"\"
+
             # 画面中央 に表示させる内容
             with disp_col1[1]:
                 #st: st.imageによる画像の表示
@@ -114,9 +137,9 @@ st.header("2. st.video を利用した動画の表示方法",divider='rainbow')
 #ファイルパスの設定
 # `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
 try :
-    video_path1 = "media/sample_mov02.mov"
+    video_path1 = "media/sample_mov02.mp4"
 except :
-    video_path1 = "2024年第2回高大連携定例研究会/media/sample_mov02.mov"
+    video_path1 = "2024年第2回高大連携定例研究会/media/sample_mov02.mp4"
 
 
 #st: st.videoによる画像の表示
@@ -128,9 +151,9 @@ if st.checkbox("ソースコード表示",key="data_show_code_disp2") :
             #ファイルパスの設定
             # `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
             try :
-                video_path1 = "media/sample_mov02.mov"
+                video_path1 = "media/sample_mov02.mp4"
             except :
-                video_path1 = "2024年第2回高大連携定例研究会/media/sample_mov02.mov"
+                video_path1 = "2024年第2回高大連携定例研究会/media/sample_mov02.mp4"
 
 
             #st: st.videoによる画像の表示
