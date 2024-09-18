@@ -1,10 +1,5 @@
 import streamlit as st
 
-from pathlib import Path
-import streamlit as st
-
-image_path = Path(__file__)
-st.write(image_path)
 
 #st: st.title を利用したテキスト表示
 st.title("メディアデータの表示方法")
