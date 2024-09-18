@@ -136,10 +136,12 @@ st.header("2. st.video を利用した動画の表示方法",divider='rainbow')
 
 #ファイルパスの設定
 # `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
-try :
-    video_path1 = "media/sample_mov02.mp4"
-except :
+
+if location_str == 'github' :
     video_path1 = "2024年第2回高大連携定例研究会/media/sample_mov02.mp4"
+else:
+    video_path1 = "media/sample_mov02.mp4"
+
 
 
 #st: st.videoによる画像の表示
@@ -177,11 +179,10 @@ st.header("2. st.audio を利用した動画の表示方法",divider='rainbow')
 
 #ファイルパスの設定
 # `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
-try :
-    audio_path1 = "media/sample_audio01.aac"
-except :
+if location_str == 'github' :
     audio_path1 = "2024年第2回高大連携定例研究会/media/sample_audio01.aac"
-
+else:
+    audio_path1 = "media/sample_audio01.aac"
 
 """
 ##### 秋の夜
