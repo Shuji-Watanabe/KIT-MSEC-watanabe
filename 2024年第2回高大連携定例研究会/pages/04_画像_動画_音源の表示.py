@@ -44,7 +44,7 @@ else:
     location_str = "local"
 
 
-# `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
+# location_str == 'github'はStreamlitのCommunity Cloudを利用する場合のファイルパス
 if location_str == 'github' :
     image_path1 = "2024年第2回高大連携定例研究会/media/sample_im01.jpeg"
     image_path2 = "2024年第2回高大連携定例研究会/media/sample_im02.jpeg"
@@ -89,8 +89,7 @@ if st.checkbox("ソースコード表示",key="data_show_code_disp1") :
             else:
                 location_str = "local"
 
-
-            # `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
+            # location_str == 'github'はStreamlitのCommunity Cloudを利用する場合のファイルパス
             if location_str == 'github' :
                 image_path1 = "2024年第2回高大連携定例研究会/media/sample_im01.jpeg"
                 image_path2 = "2024年第2回高大連携定例研究会/media/sample_im02.jpeg"
@@ -135,14 +134,11 @@ st.header("2. st.video を利用した動画の表示方法",divider='rainbow')
 """
 
 #ファイルパスの設定
-# `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
-
+# location_str == 'github'はStreamlitのCommunity Cloudを利用する場合のファイルパス
 if location_str == 'github' :
     video_path1 = "2024年第2回高大連携定例研究会/media/sample_mov02.MOV"
 else:
     video_path1 = "media/sample_mov02.MOV"
-
-
 
 #st: st.videoによる画像の表示
 st.video(data=video_path1,loop=True)
@@ -151,12 +147,12 @@ if st.checkbox("ソースコード表示",key="data_show_code_disp2") :
     """"""
     st.code("""
             #ファイルパスの設定
-            # `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
-            try :
-                video_path1 = "media/sample_mov02.MOV"
-            except :
+            # location_str == 'github'はStreamlitのCommunity Cloudを利用する場合のファイルパス
+            ### location_str は『1. st.image を利用した画像の表示方法』にて設定した変数
+            if location_str == 'github' :
                 video_path1 = "2024年第2回高大連携定例研究会/media/sample_mov02.MOV"
-
+            else:
+                video_path1 = "media/sample_mov02.MOV"
 
             #st: st.videoによる画像の表示
             st.video(data=video_path1,loop=True)
@@ -178,7 +174,7 @@ st.header("2. st.audio を利用した動画の表示方法",divider='rainbow')
 """
 
 #ファイルパスの設定
-# `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
+# location_str == 'github'はStreamlitのCommunity Cloudを利用する場合のファイルパス
 if location_str == 'github' :
     audio_path1 = "2024年第2回高大連携定例研究会/media/sample_audio01.aac"
 else:
@@ -196,11 +192,11 @@ if st.checkbox("ソースコード表示",key="data_show_code_disp3") :
     """"""
     st.code("""
             #ファイルパスの設定
-            # `try`以下はローカルネットワーク上でアプリを実行するする場合．`except`以下はStreamlitのCommunity Cloudを利用する場合．
-            try :
-                audio_path1 = "media/sample_audio01.aac"
-            except :
+            # location_str == 'github'はStreamlitのCommunity Cloudを利用する場合のファイルパス
+            if location_str == 'github' :
                 audio_path1 = "2024年第2回高大連携定例研究会/media/sample_audio01.aac"
+            else:
+                audio_path1 = "media/sample_audio01.aac"
             #st: st.videoによる画像の表示
             # start timeとend timeというオプションを使用．またループ再生をオンにしている．
             st.audio(data=audio_path1,start_time=10,end_time=25,loop=True)
