@@ -29,10 +29,6 @@ __参考資料__
 #st: st.header を利用した見出し表示
 st.header("1. folium を利用した画像の表示方法",divider='rainbow')
 
-"""
-
-"""
-
 # 初期表示に関する設定
 map = folium.Map(location=[36.530, 136.6287],zoom_start = 15) 
 
