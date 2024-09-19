@@ -94,7 +94,7 @@ vscodeのターミナルで，streamlitのソースファイルがある場所�
     Local URL:  _XXXXXXX_  
     Network URL: _YYYYYYY_  
 
-と表示されるはずです．_XXXXXXX_ や_YYYYYYY_を利用することで，
+と表示されるはずです． _XXXXXXX_ や _YYYYYYY_ を利用することで，
 同一ネットワーク上にあるPCから，このアプリが利用できます．
          """)
 
