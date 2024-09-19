@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-"""# ヒストグラム"""
+"""# 基本統計量の計算"""
 tub_dict = {"デモデータによる分析体験":0,"ユーザーデータによる分析":1}
 selected_cbox = st.radio(label="選択", options = tub_dict.keys(),horizontal=True)
 """___"""
