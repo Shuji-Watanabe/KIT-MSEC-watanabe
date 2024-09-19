@@ -13,7 +13,6 @@ import streamlit as st
 
 """
 
-st.info("""詳細は今後アップデートします""")
 
 """  """
 """  """
@@ -34,23 +33,22 @@ st.header("2. streamlitアプリを作成する",divider="rainbow")
 #### アプリ作成の流れ  
 """
 st.write("""#### 1. vscodeにてpythonのソースファイルを作成する  
-         [Python Japan:Visual Studio Code でPython入門 【Windows編】 〉 VSCodeでPythonを実行](https://www.python.jp/python_vscode/windows/run/write_source.html)
+[Python Japan:Visual Studio Code でPython入門 【Windows編】 〉 VSCodeでPythonを実行](https://www.python.jp/python_vscode/windows/run/write_source.html)
 """)
 st.write("""#### 2. 作成したソースファイルに書く内容  
-         次のように，ライブラリ `streamlit` をインポートする．一般的に
-         `streamlit`は`st`で呼び出します．
-         """)
+次のように，ライブラリ `streamlit` をインポートする．一般的に`streamlit`は`st`で呼び出します．
+""")
 st.code("""import streamlit as st""")
 
 st.write("""#### 3. ソースコードの保存  
-         Webアプリ作成のためのコードが書き終えたら，保存をお願いします．
-         """)
+Webアプリ作成のためのコードが書き終えたら，保存をお願いします．
+""")
 st.code("""
-        # 例
-        # test.pyというファイルに次を書き，保存してください．
-        import streamlit as st
-        
-        st.write("Hello World！")
+    # 例
+    # test.pyというファイルに次を書き，保存してください．
+    import streamlit as st
+
+    st.write("Hello World！")
         """)
 
 st.write("""#### 4. ファイルの実行  
@@ -100,3 +98,6 @@ __参考資料__
     1. streamlit Community Cloudのアカウント作成
     1. streamlit Community CloudでWebアプリをデプロイ
 """
+
+
+st.info("""今後，情報を追加する予定""")
