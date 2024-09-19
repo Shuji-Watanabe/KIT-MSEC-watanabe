@@ -142,6 +142,29 @@ elif tub_dict[selected_cbox] == 1 :
     """
     if st.button("計算の実行",key="button 01"):
         with st.spinner('作成中'):
-            st.write("作成中")
-    else:
-        """___"""
+            ndata_int = int(data_df.count())
+            sum_f = float(data_df.sum())
+            mean_f = float(data_df.mean())
+            var_f = float(data_df.var())
+            med_f = float(data_df.median())
+            stdev_f = float(data_df.std())
+            max_f = float(data_df.max())
+            min_f = float(data_df.min())
+            quantile_list = data_df.quantile([0.25,0.5,0.75]).transpose()
+            # 計算結果の表示
+            disp_col1 = st.columns(4)
+            disp_col1[0].metric(label="データ数",value=ndata_int)
+            disp_col1[1].metric(label="合計",value=sum_f)
+            disp_col1[2].metric(label="最大値",value=max_f)
+            disp_col1[3].metric(label="最小値",value=min_f)
+            """___"""
+            disp_col2 = st.columns(4)
+            disp_col2[0].metric(label="平均 ",value=f"{mean_f:4.1f}")
+            disp_col2[1].metric(label="標準偏差",value=f"{stdev_f:4.1f}")
+            """___"""
+            disp_col3 = st.columns(4)
+            disp_col3[0].metric(label="中央値 ",value=f"{med_f:4.1f}")
+            disp_col3[1].metric(label="第一四分位数",value=f"{float(quantile_list[0.25]):4.1f}")
+            disp_col3[2].metric(label="第二四分位数",value=f"{float(quantile_list[0.5]):4.1f}")
+            disp_col3[3].metric(label="第三四分位数",value=f"{float(quantile_list[0.75]):4.1f}")
+            """___"""
