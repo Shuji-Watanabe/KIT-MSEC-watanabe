@@ -79,6 +79,7 @@ else :
         """
     with tmp_col[1]:
         data_file = open(file_path)
+        st.write(data_file)
         st.download_button(label="結果のダウンロード",data=data_file ,file_name="download_datafile.csv",mime="text/csv")
 
 """  """
