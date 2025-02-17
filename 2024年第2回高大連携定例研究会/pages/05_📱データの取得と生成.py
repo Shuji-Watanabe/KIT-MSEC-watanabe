@@ -50,7 +50,7 @@ ___
 
 
 if path == '/mount/src/kit-msec-watanabe':
-    tmp_file_path = "programfile/sample_datas/"
+    tmp_file_path = "/mount/src/kit-msec-watanabe/sample_datas/"
 else:
     tmp_file_path = "sample_datas/"
 
