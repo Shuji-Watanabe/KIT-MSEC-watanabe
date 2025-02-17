@@ -54,7 +54,7 @@ if path == '/mount/src/kit-msec-watanabe':
 else:
     tmp_file_path = "sample_datas/"
 
-
+st.write(path)
 
 ### 使用データのダウンロード ###
 st.header("1. 使用データのダウンロード",divider="rainbow")
