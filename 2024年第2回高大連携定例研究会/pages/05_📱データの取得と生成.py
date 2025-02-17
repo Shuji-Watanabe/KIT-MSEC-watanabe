@@ -54,8 +54,6 @@ if path == '/mount/src/kit-msec-watanabe':
 else:
     tmp_file_path = "sample_datas/"
 
-st.write(path)
-
 ### 使用データのダウンロード ###
 st.header("1. 使用データのダウンロード",divider="rainbow")
 
@@ -73,6 +71,7 @@ if not selected_key :
     st.error("項目を適切に選択してください．")
 else :
     file_path = tmp_file_path + pages_dict[selected_key]
+    st.write(file_path)
     tmp_col = st.columns([2,1])
     with tmp_col[0]:
         f"""
