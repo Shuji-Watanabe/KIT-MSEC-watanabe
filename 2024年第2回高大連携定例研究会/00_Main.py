@@ -43,3 +43,9 @@ with col[1]:
 with col[2]:
     image_path = tmp_path + "/expl_download.003.jpeg"
     st.image(image_path,caption="操作３")
+
+st.sidebar.markdown(\
+"**更新情報**\n \
+- Ver001:2024.9.18\n\
+- Ver002:2025.2.17\n\
+")
