@@ -50,9 +50,9 @@ ___
 
 
 if path == '/mount/src/kit-msec-watanabe':
-    tmp_file_path = "/mount/src/kit-msec-watanabe/sample_datas/"
+    tmp_file_path = "/mount/src/kit-msec-watanabe/sample_datas"
 else:
-    tmp_file_path = "sample_datas/"
+    tmp_file_path = "sample_datas"
 
 ### 使用データのダウンロード ###
 st.header("1. 使用データのダウンロード",divider="rainbow")
@@ -70,7 +70,7 @@ selected_key = st.selectbox(label="ダウンロードしたいデータを使用
 if not selected_key :
     st.error("項目を適切に選択してください．")
 else :
-    file_path = tmp_file_path + pages_dict[selected_key]
+    file_path = os.path.join(tmp_file_path, pages_dict[selected_key])
     st.write(file_path)
     tmp_col = st.columns([2,1])
     with tmp_col[0]:
@@ -78,7 +78,7 @@ else :
         {selected_key}で使用したデータをダウンロードします．
         """
     with tmp_col[1]:
-        data_file = open(str(file_path))
+        data_file = open(file_path)
         st.download_button(label="結果のダウンロード",data=data_file ,file_name="download_datafile.csv",mime="text/csv")
 
 """  """
