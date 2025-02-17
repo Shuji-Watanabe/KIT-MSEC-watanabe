@@ -171,3 +171,84 @@ elif tub_dict[selected_cbox] == 1 :
             disp_col3[2].metric(label="第二四分位数",value=f"{float(quantile_list[0.5]):4.1f}")
             disp_col3[3].metric(label="第三四分位数",value=f"{float(quantile_list[0.75]):4.1f}")
             """___"""
+
+
+# import streamlit as st
+# import pandas as pd
+
+# def compute_statistics(data):
+#     """データの基本統計量を計算する"""
+#     return {
+#         "データ数": data.count(),
+#         "合計": data.sum(),
+#         "最大値": data.max(),
+#         "最小値": data.min(),
+#         "平均": data.mean(),
+#         "標準偏差": data.std(),
+#         "中央値": data.median(),
+#         "第一四分位数": data.quantile(0.25),
+#         "第二四分位数": data.quantile(0.5),
+#         "第三四分位数": data.quantile(0.75),
+#     }
+
+# st.set_page_config(page_title="基本統計量の計算", layout="wide")
+# st.title("📊 基本統計量の計算")
+
+# st.sidebar.header("データの選択")
+# options = {"分析体験デモデータ": 0, "ユーザーデータ": 1}
+# selected_option = st.sidebar.radio("選択", options.keys())
+
+# col_main, col_side = st.columns([3, 1])
+
+# with col_main:
+#     if selected_option == "分析体験デモデータ":
+#         st.subheader("デモデータを用いた分析", divider="rainbow")
+#         demo_data = {"デモデータ1": "sample_datas/scatter_data01.csv"}
+#         selected_data = st.selectbox("分析するデータを選択してください", demo_data.keys())
+        
+#         try:
+#             df = pd.read_csv(demo_data[selected_data], encoding='shift_jis')
+#         except Exception as e:
+#             st.error(f"データの読み込みに失敗しました: {e}")
+#             st.stop()
+        
+#         column = st.selectbox("データ列を選択", df.columns)
+#         data = df[column]
+#         st.dataframe(df, use_container_width=True, height=300)
+        
+#         st.subheader("📊 基本統計量の計算", divider="green")
+#         if st.button("計算の実行", use_container_width=True):
+#             stats = compute_statistics(data)
+#             for key, value in stats.items():
+#                 st.metric(label=key, value=f"{value:.2f}")
+    
+#     else:
+#         st.subheader("ユーザーデータを用いた分析", divider="rainbow")
+#         with st.expander("アップロード前の確認"):
+#             st.warning("個人情報が含まれていないか確認してください。")
+#             confirm = st.checkbox("確認しました。")
+        
+#         if not confirm:
+#             st.stop()
+        
+#         uploaded_file = st.file_uploader("CSVファイルをアップロードしてください。", type=["csv"])
+#         if not uploaded_file:
+#             st.error("データがアップロードされていません", icon="⚠️")
+#             st.stop()
+        
+#         df = pd.read_csv(uploaded_file)
+#         column = st.selectbox("データの選択", df.columns)
+#         data = df[column]
+        
+#         if st.checkbox("データの確認"):
+#             st.dataframe(df, use_container_width=True, height=300)
+        
+#         st.subheader("📊 基本統計量の計算", divider="green")
+#         if st.button("計算の実行", use_container_width=True):
+#             with st.spinner('計算中...'):
+#                 stats = compute_statistics(data)
+#                 for key, value in stats.items():
+#                     st.metric(label=key, value=f"{value:.2f}")
+
+# with col_side:
+#     st.image("https://via.placeholder.com/250", caption="統計分析ツール", use_column_width=True)
