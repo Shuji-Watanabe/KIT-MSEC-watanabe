@@ -78,9 +78,9 @@ else :
         {selected_key}で使用したデータをダウンロードします．
         """
     with tmp_col[1]:
-        data_file = open(file_path)
-        st.write(data_file)
-        st.download_button(label="結果のダウンロード",data=data_file ,file_name="download_datafile.csv",mime="text/csv")
+        # data_file = open(file_path)
+        st.write(file_path)
+        st.download_button(label="結果のダウンロード",data=file_path ,file_name="download_datafile.csv",mime="text/csv")
 
 """  """
 """  """
