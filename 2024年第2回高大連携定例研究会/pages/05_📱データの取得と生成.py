@@ -101,7 +101,7 @@ type_dict = {"一様分布に従うデータ":0
              }
 
 type_keys = type_dict.keys()
-selected_type = st.selectbox(label="生成するデータの分布をしていしてください．",options=type_keys)
+selected_type = st.selectbox(label="生成するデータの分布をしていしてください．",options=type_keys, key="makedata1")
 selected_type_index = type_dict[ selected_type ]
 """ """
 """ """
@@ -195,7 +195,7 @@ np.set_printoptions(precision=5)
 type_dict = {"正規分布に従うデータ":1}
 
 type_keys = type_dict.keys()
-selected_type = st.selectbox(label="生成するデータの分布をしていしてください．",options=type_keys)
+selected_type = st.selectbox(label="生成するデータの分布をしていしてください．",options=type_keys, key="makedata2")
 selected_type_index = type_dict[ selected_type ]
 """ """
 """ """
@@ -210,8 +210,8 @@ f"""#### {selected_type}の生成（2次配列）"""
 ___
 """
 
-tmp_col = st.columns([1,1,1,1])
-if tmp_index == 0:
+tmp_col = st.columns([1,1,1,1]) 
+if selected_type_index == 1:
     with tmp_col[0]:
         size_int = int(st.text_input(label="サンプル数",value= 500,key="sample size"))
         rho = float(st.number_input(label="相関係数$~\\rho~$",min_value=-1.0,max_value=1.0,value=0.75)) 
