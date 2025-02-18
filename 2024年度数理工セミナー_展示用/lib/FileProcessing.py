@@ -1,4 +1,4 @@
-def streamlit_uploaded_csv(st_uploaded_files, selected_type="自動"):
+def streamlit_uploaded_csv(st_uploaded_files, selected_type="自動",DisplayLocation = "normal"):
     import streamlit as st
     import pandas as pd
     if selected_type == "自動":
@@ -14,7 +14,11 @@ def streamlit_uploaded_csv(st_uploaded_files, selected_type="自動"):
             except:
                 st.error("エンコードエラー．別の方法でエンコードを設定してください．")
                 st.stop()
-            st.write(f"アップロードされたファイルのエンコード: {encoding}") # 確認用
+            if DisplayLocation == "normal":
+                st.write(f"アップロードされたファイルのエンコード: {encoding}") # 確認用
+            elif DisplayLocation == "sidebar":
+                st.sidebar.write(f"アップロードされたファイルのエンコード: {encoding}") # 確認用
+
     elif selected_type == "選択" :
         encode_list = [  "utf_8"
                         , "shift_jis"
@@ -26,14 +30,21 @@ def streamlit_uploaded_csv(st_uploaded_files, selected_type="自動"):
                         , "utf_16", "utf_16_be", "utf_16_le"
                         , "utf_7" 
                         , "utf_8_sig"]
-        encoding = st.selectbox( "適切なエンコードを選択してください．", options=encode_list)
+        if DisplayLocation == "normal":
+            encoding = st.selectbox( "適切なエンコードを選択", options=encode_list)
+        elif DisplayLocation == "sidebar":
+            encoding = st.sidebar.selectbox( "適切なエンコードを選択", options=encode_list)
         try:
             read_data_df = pd.read_csv(st_uploaded_files, encoding=encoding)
         except:
             st.error("エンコードエラー．適切なエンコードを選択してください．")
             st.stop() 
+
     elif selected_type == "入力":
-        encoding = st.text_input("エンコードを半角英数字で入力してください．",value="utf_8")
+        if DisplayLocation == "normal":
+            encoding = st.text_input("エンコードを半角英数字で入力",value="utf_8")
+        elif DisplayLocation == "sidebar":
+            encoding = st.sidebar.text_input("エンコードを半角英数字で入力",value="utf_8")
         try:
             read_data_df = pd.read_csv(st_uploaded_files, encoding=encoding)
         except:
