@@ -6,6 +6,15 @@ import itertools
 import lib.display 
 import os
 
+results_keys_dict = { "names":"変数名"
+                    ,"coef":"偏回帰係数"
+                    ,"se":"標準誤差"
+                    ,"T":"T値"
+                    ,"pval":"p値"
+                    ,"CI[2.5%]":"下限"
+                    ,"CI[97.5%]":"上限"
+                    ,"r2":"決定係数"
+                    ,"adj_r2":"自由度調整済決定係数"}
 
 #-------------title begin-----------------------------------------------------
 st.title("回帰分析")
@@ -21,7 +30,7 @@ st.header(":beginner: 概要",divider="rainbow")
 
 #=    sidebar begin   ===
 st.sidebar.subheader("線形回帰分析のオプション")
-st.sidebar.write("どのようなデータを用いてデータ分析を行うか選択してください．")
+st.sidebar.markdown(":arrow_forward: 分析に使用するデータの選択")
 tub_dict = {"分析体験デモデータ":0,"ユーザーデータ":1}
 selected_cbox = st.sidebar.radio(label="選択", options = tub_dict.keys(),horizontal=True)
 #=    sidebar   end   ===
@@ -41,9 +50,13 @@ if tub_dict[selected_cbox] == 0 :
     #-------------subheader end------------------------------------------------
     
     select_data_dict = {"デモデータ１:回帰分析用データ":0}
-    # 分析データの選択
-    select_str = st.selectbox("分析に使用するデータを選択してください．",select_data_dict.keys(),key="mselect 01")
-    # データの読み込み
+    left_side_col, right_side_col = st.columns([1,1])
+    
+    with left_side_col:
+        # 分析データの選択
+        select_str = st.selectbox("分析に使用するデータを選択してください．",select_data_dict.keys(),key="mselect 01")
+    
+    # データの読み込み    
     if select_data_dict[select_str] == 0:
         #デモデータ『hist_data01.csv』の読み込み 
         try :
@@ -54,6 +67,12 @@ if tub_dict[selected_cbox] == 0 :
             read_data_df = pd.read_csv("2024年第2回高大連携定例研究会/sample_datas/linear_regression01.csv",encoding='shift_jis')
     else :
         st.stop()
+
+    with right_side_col:
+        st.write("読み込まれたデータの確認")
+        st.dataframe(read_data_df
+                    , use_container_width=True
+                    , height=200)
     """___"""
 
 
@@ -62,18 +81,18 @@ if tub_dict[selected_cbox] == 0 :
     keys_list = list(read_data_df.keys())
     input_col = st.columns([1,1])
     with input_col[0]:
-        Response_Var_index_str = st.selectbox("目的変数として使用するデータの選択",keys_list)
+        Response_Val_index_str = st.selectbox("目的変数として使用するデータの選択",keys_list)
 
-        if not Response_Var_index_str:
+        if not Response_Val_index_str:
             """"""
             st.error("データを選択してください")
             st.stop()
         else:
-            Response_Var_df = read_data_df[Response_Var_index_str]
-            st.dataframe(Response_Var_df
+            Response_Val_df = read_data_df[Response_Val_index_str]
+            st.dataframe(Response_Val_df
                     , use_container_width=True
                     , height=200)
-            keys_list_removed = [item for item in keys_list if item != Response_Var_index_str]
+            keys_list_removed = [item for item in keys_list if item != Response_Val_index_str]
             with input_col[1]:
                 Predictors_index_list = st.multiselect("説明変数として使用するデータの選択",keys_list_removed)
 
@@ -92,39 +111,42 @@ if tub_dict[selected_cbox] == 0 :
     #-------------subheader begin----------------------------------------------
     st.subheader(f"Step２: 線形回帰分析の実行", divider="green")
     #-------------subheader end------------------------------------------------
-    if st.button("計算の実行",key="button 01"):
-        with st.spinner('作成中'):
-            import pingouin as pg
-            lr_results = pg.linear_regression(X=Predictors_df,y=Response_Var_df)
-            col_user = st.columns([2,1])
-            st.write("#### 計算結果（オリジナル）")
-            st.dataframe(lr_results.round(5)
-                         , use_container_width=True)
-            st.write("#### 計算結果（解説）")
-            st.write("##### 1) モデル")
-            # LaTeX文字列を作成する
-            terms = []
-            for i, item in enumerate(Predictors_index_list):
-                coeff = lr_results.loc[item, 'coef']
-                # 小数第3位までの絶対値
-                formatted_coeff = f"{abs(coeff):.3f}"
-                
-                # 1つ目の項目は符号なし（負の場合は先頭に '-' を付ける）
-                if i == 0:
-                    sign = "-" if coeff < 0 else ""
-                else:
-                    # 2つ目以降は正の場合は " + ", 負の場合は " - "
-                    sign = " - " if coeff < 0 else " + "
-                
-                # 各項目の項を生成 (例: "1.23\,(item1)")
-                term = f"{sign}{formatted_coeff}\\,({item})"
-                terms.append(term)
+    with st.spinner('作成中'):
+        import pingouin as pg
+        lr_results = pg.linear_regression(X=Predictors_df,y=Response_Val_df)
+        names_list = ["Intercept"] + Predictors_index_list
+        coef_list = lr_results[lr_results["names"]==names_list]["coef"]
 
-                # 連結して最終的な文字列を作成
-                exp_latex = "Response_Var_index_str = " + "".join(terms)
-                st.markdown(f"${exp_latex}$")
-    else:
-        """___"""
+        from lib import display
+        lr_expr_latex = display.make_lr_expr(names_list=names_list
+                                                ,coef_list=coef_list
+                                                ,response_value=Response_Val_index_str)
+        
+        st.write("#### 得られた線形回帰式")
+        st.latex(lr_expr_latex)    
+        st.divider()
+        
+        disp_col1 = st.columns([2,5])
+        st.sidebar.markdown(":arrow_forward: 表示桁数の設定")
+        r2_digit_num = st.sidebar.number_input(label="予測精度の評価の表示桁数",min_value=0,step=1,value=3)
+        ana_digit_num = st.sidebar.number_input(label="偏回帰係数に関する分析の表示桁数",min_value=0,step=1,value=3)
+        with disp_col1[0]:
+            st.write("#### 予測精度の評価")
+            st.metric( label=results_keys_dict["r2"]
+                    ,value=float(lr_results.loc[0,"r2"].round(r2_digit_num )))
+            st.metric( label=results_keys_dict["adj_r2"]
+                    ,value=float(lr_results.loc[0,"adj_r2"].round(r2_digit_num )))
+        with disp_col1[1]:
+            st.write("#### 偏回帰係数に関する分析")
+            results_keys_list = list(results_keys_dict.keys())
+            disp_result_df = lr_results[results_keys_list[:7]]
+            disp_result_df.rename(columns=results_keys_dict, inplace=True)
+            st.dataframe(data=disp_result_df.round(ana_digit_num)
+                        ,hide_index = True
+                        , use_container_width=True)
+            st.write("＊下限：95%信頼区間の下限，　上限：95%信頼区間の上限 ")
+                
+    st.divider()
 
 
 #===============================================================================================
@@ -140,7 +162,6 @@ elif tub_dict[selected_cbox] == 1 :
     #-------------subheader begin----------------------------------------------
     st.subheader(f"Step１: 分析データのアップロード", divider="green")
     #-------------subheader end------------------------------------------------
-    st.stop()
     disp_col0 = st.columns([1,3])
     with disp_col0[1]:
         st.warning("データをアップロードする前に，アップロードするデータに個人情報等，取扱に注意しなければならないデータが含まれていないか確認してください．")
@@ -170,48 +191,70 @@ elif tub_dict[selected_cbox] == 1 :
     keys_list = list(read_data_df.keys())
     input_col = st.columns([1,1])
     with input_col[0]:
-        index_str = st.multiselect("偏相関係数行列を作成するデータの選択",keys_list,key="mselect 02")
-        if not index_str:
+        Response_Val_index_str = st.selectbox("目的変数として使用するデータの選択",keys_list)
+
+        if not Response_Val_index_str:
             """"""
             st.error("データを選択してください")
             st.stop()
-        elif len(index_str) == 1 :
-            """"""
-            st.error("データを2つ以上選択してください")
-            st.stop() 
-           
-    data_df = read_data_df[index_str]
-    data_len = data_df.shape[0]
+        else:
+            Response_Val_df = read_data_df[Response_Val_index_str]
+            st.dataframe(Response_Val_df
+                    , use_container_width=True
+                    , height=200)
+            keys_list_removed = [item for item in keys_list if item != Response_Val_index_str]
+            with input_col[1]:
+                Predictors_index_list = st.multiselect("説明変数として使用するデータの選択",keys_list_removed)
 
-    with input_col[1]:
-        st.dataframe(data_df
+                if not Predictors_index_list:
+                    """"""
+                    st.error("データを選択してください")
+                    st.stop()
+                Predictors_df = read_data_df[Predictors_index_list]
+                st.dataframe(Predictors_df
                         , use_container_width=True
                         , height=200)
+
+    
     st.success(f'準備完了', icon="✅")
     st.divider()
 
     #-------------subheader begin----------------------------------------------
-    st.subheader(f"Step２: 偏相関係数行列の作成", divider="green")
+    st.subheader(f"Step２: 線形回帰分析の実行", divider="green")
     #-------------subheader end------------------------------------------------
-    if st.button("偏相関係数行列の作成",key="button 01"):
-        with st.spinner('作成中'):
-            import pingouin as pg
-            partial_corr_matrix = pg.pcorr(data_df)
-            col_user = st.columns([2,1])
-            
-            st.dataframe(partial_corr_matrix
-                         , use_container_width=True)
-            corrs_list = []
-            tmp_list_index = itertools.combinations(index_str, 2)
-            for label in tmp_list_index:
-                label_list = list(label)
-                corrs_list.append([label_list[0],label_list[1],pd.DataFrame(partial_corr_matrix).at[label_list[0],label_list[1]]])
+    with st.spinner('作成中'):
+        import pingouin as pg
+        lr_results = pg.linear_regression(X=Predictors_df,y=Response_Val_df)
+        names_list = ["Intercept"] + Predictors_index_list
+        coef_list = lr_results[lr_results["names"]==names_list]["coef"]
+
+        from lib import display
+        lr_expr_latex = display.make_lr_expr(names_list=names_list
+                                                ,coef_list=coef_list
+                                                ,response_value=Response_Val_index_str)
+        
+        st.write("#### 得られた線形回帰式")
+        st.latex(lr_expr_latex)    
+        st.divider()
+        
+        disp_col1 = st.columns([2,5])
+        st.sidebar.markdown(":arrow_forward: 表示桁数の設定")
+        r2_digit_num = st.sidebar.number_input(label="予測精度の評価の表示桁数",min_value=0,step=1,value=3)
+        ana_digit_num = st.sidebar.number_input(label="偏回帰係数に関する分析の表示桁数",min_value=0,step=1,value=3)
+        with disp_col1[0]:
+            st.write("#### 予測精度の評価")
+            st.metric( label=results_keys_dict["r2"]
+                    ,value=float(lr_results.loc[0,"r2"].round(r2_digit_num )))
+            st.metric( label=results_keys_dict["adj_r2"]
+                    ,value=float(lr_results.loc[0,"adj_r2"].round(r2_digit_num )))
+        with disp_col1[1]:
+            st.write("#### 偏回帰係数に関する分析")
+            results_keys_list = list(results_keys_dict.keys())
+            disp_result_df = lr_results[results_keys_list[:7]]
+            disp_result_df.rename(columns=results_keys_dict, inplace=True)
+            st.dataframe(data=disp_result_df.round(ana_digit_num)
+                        ,hide_index = True
+                        , use_container_width=True)
+            st.write("＊下限：95%信頼区間の下限，　上限：95%信頼区間の上限 ")
                 
-            tmp_corrs_df = pd.DataFrame(corrs_list,columns=["label 1","label 2","corr."])
-            tmp_corrs_df = tmp_corrs_df.sort_values("corr.",ascending=False)
-            tmp_corrs_df["Explanetion"] = [lib.display.explanation_corr(x) for x in tmp_corrs_df["corr."] ]
-            
-            with st.expander("偏相関係数の解釈"):
-                st.dataframe(tmp_corrs_df)
-    else:
-        """___"""
+    st.divider()
