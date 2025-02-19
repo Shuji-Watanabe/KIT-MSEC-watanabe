@@ -186,7 +186,7 @@ elif tub_dict[selected_cbox] == 1 :
                                                         ,selected_type=selected_way
                                                         ,DisplayLocation="sidebar")
 
-
+    st.sidebar.divider()
     # 分析データ列の選択
     keys_list = list(read_data_df.keys())
     input_col = st.columns([1,1])
@@ -241,6 +241,7 @@ elif tub_dict[selected_cbox] == 1 :
         st.sidebar.markdown(":arrow_forward: 表示桁数の設定")
         r2_digit_num = st.sidebar.number_input(label="予測精度の評価の表示桁数",min_value=0,step=1,value=3)
         ana_digit_num = st.sidebar.number_input(label="偏回帰係数に関する分析の表示桁数",min_value=0,step=1,value=3)
+        st.sidebar.divider()
         with disp_col1[0]:
             st.write("#### 予測精度の評価")
             st.metric( label=results_keys_dict["r2"]

@@ -137,7 +137,7 @@ elif tub_dict[selected_cbox] == 1 :
     read_data_df= FileProcessing.streamlit_uploaded_csv(st_uploaded_files=uploaded_files
                                                         ,selected_type=selected_way
                                                         ,DisplayLocation="sidebar")
-
+    st.sidebar.divider()
     # 分析データ列の選択
     keys_list = list(read_data_df.keys())
     input_col = st.columns([1,1])
