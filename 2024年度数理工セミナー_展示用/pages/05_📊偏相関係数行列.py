@@ -62,7 +62,7 @@ if tub_dict[selected_cbox] == 0 :
     keys_list = list(read_data_df.keys())
     input_col = st.columns([1,1])
     with input_col[0]:
-        index_str = st.multiselect("相関係数行列を作成するデータの選択",keys_list)
+        index_str = st.multiselect("偏相関係数行列を作成するデータの選択",keys_list)
 
         if not index_str:
             """"""
