@@ -138,7 +138,9 @@ if tub_dict[selected_cbox] == 0 :
                         ,hide_index = True
                         , use_container_width=True)
             st.write("＊下限：95%信頼区間の下限，　上限：95%信頼区間の上限 ")
-
+        st.divider()
+        
+        
         from lib import display
         lr_expr_latex = display.make_lr_expr(names_list=names_list
                                                 ,coef_list=coef_list
@@ -148,7 +150,7 @@ if tub_dict[selected_cbox] == 0 :
         st.latex(lr_expr_latex)    
         st.divider()
                 
-    st.divider()
+    
 
 
 #===============================================================================================
@@ -250,7 +252,9 @@ elif tub_dict[selected_cbox] == 1 :
                         ,hide_index = True
                         , use_container_width=True)
             st.write("＊下限：95%信頼区間の下限，　上限：95%信頼区間の上限 ")
-            
+        st.divider()
+        
+        
         from lib import display
         lr_expr_latex = display.make_lr_expr(names_list=names_list
                                                 ,coef_list=coef_list
@@ -259,4 +263,4 @@ elif tub_dict[selected_cbox] == 1 :
         st.write("#### 得られた線形回帰式")
         st.latex(lr_expr_latex)    
         st.divider()       
-    st.divider()
+    
