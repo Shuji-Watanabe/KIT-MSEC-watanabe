@@ -42,7 +42,7 @@ if tub_dict[selected_cbox] == 0 :
             read_data_df = pd.read_csv("sample_datas/scatter_data01.csv",encoding='shift_jis')
         except:
             ##Local
-            read_data_df = pd.read_csv("2024年第2回高大連携定例研究会/sample_datas/scatter_data01.csv",encoding='shift_jis')
+            read_data_df = pd.read_csv("2024年度数理工セミナー_展示用/sample_datas/scatter_data01.csv",encoding='shift_jis')
     else :
         st.stop()
     """___"""
