@@ -40,7 +40,7 @@ if tub_dict[selected_cbox] == 0 :
     st.subheader(f"Step１: 分析データの選択", divider="green")
     #-------------subheader end------------------------------------------------
     
-    select_data_dict = {"デモデータ１:相関係数用データ":0}
+    select_data_dict = {"デモデータ１:偏相関係数用データ":0}
     # 分析データの選択
     select_str = st.selectbox("分析に使用するデータを選択してください．",select_data_dict.keys(),key="mselect 01")
     # データの読み込み
@@ -51,7 +51,7 @@ if tub_dict[selected_cbox] == 0 :
             read_data_df = pd.read_csv("sample_datas/scatter_data01.csv",encoding='shift_jis')
         except:
             ##Local
-            read_data_df = pd.read_csv("22024年度数理工セミナー_展示用/sample_datas/scatter_data01.csv",encoding='shift_jis')
+            read_data_df = pd.read_csv("2024年度数理工セミナー_展示用/sample_datas/scatter_data01.csv",encoding='shift_jis')
     else :
         st.stop()
     """___"""
