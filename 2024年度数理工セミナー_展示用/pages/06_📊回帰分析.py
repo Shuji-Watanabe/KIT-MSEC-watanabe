@@ -117,14 +117,7 @@ if tub_dict[selected_cbox] == 0 :
         names_list = ["Intercept"] + Predictors_index_list
         coef_list = lr_results[lr_results["names"]==names_list]["coef"]
 
-        from lib import display
-        lr_expr_latex = display.make_lr_expr(names_list=names_list
-                                                ,coef_list=coef_list
-                                                ,response_value=Response_Val_index_str)
-        
-        st.write("#### 得られた線形回帰式")
-        st.latex(lr_expr_latex)    
-        st.divider()
+
         
         disp_col1 = st.columns([2,5])
         st.sidebar.markdown(":arrow_forward: 表示桁数の設定")
@@ -145,6 +138,15 @@ if tub_dict[selected_cbox] == 0 :
                         ,hide_index = True
                         , use_container_width=True)
             st.write("＊下限：95%信頼区間の下限，　上限：95%信頼区間の上限 ")
+
+        from lib import display
+        lr_expr_latex = display.make_lr_expr(names_list=names_list
+                                                ,coef_list=coef_list
+                                                ,response_value=Response_Val_index_str)
+        
+        st.write("#### 得られた線形回帰式")
+        st.latex(lr_expr_latex)    
+        st.divider()
                 
     st.divider()
 
@@ -227,15 +229,6 @@ elif tub_dict[selected_cbox] == 1 :
         lr_results = pg.linear_regression(X=Predictors_df,y=Response_Val_df)
         names_list = ["Intercept"] + Predictors_index_list
         coef_list = lr_results[lr_results["names"]==names_list]["coef"]
-
-        from lib import display
-        lr_expr_latex = display.make_lr_expr(names_list=names_list
-                                                ,coef_list=coef_list
-                                                ,response_value=Response_Val_index_str)
-        
-        st.write("#### 得られた線形回帰式")
-        st.latex(lr_expr_latex)    
-        st.divider()
         
         disp_col1 = st.columns([2,5])
         st.sidebar.markdown(":arrow_forward: 表示桁数の設定")
@@ -257,5 +250,13 @@ elif tub_dict[selected_cbox] == 1 :
                         ,hide_index = True
                         , use_container_width=True)
             st.write("＊下限：95%信頼区間の下限，　上限：95%信頼区間の上限 ")
-                
+            
+        from lib import display
+        lr_expr_latex = display.make_lr_expr(names_list=names_list
+                                                ,coef_list=coef_list
+                                                ,response_value=Response_Val_index_str)
+        
+        st.write("#### 得られた線形回帰式")
+        st.latex(lr_expr_latex)    
+        st.divider()       
     st.divider()
