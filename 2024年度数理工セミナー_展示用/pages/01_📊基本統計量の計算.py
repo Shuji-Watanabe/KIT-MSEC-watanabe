@@ -56,6 +56,7 @@ if "location_str" in st.session_state:
 else :
     from lib import FileProcessing as fp
     location_str = fp.location()
+    st.write(location_str)
     st.session_state.location_str = location_str
 
 if location_str == "streamlit_Community_Cloud":
