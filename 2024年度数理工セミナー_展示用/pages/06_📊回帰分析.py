@@ -2,10 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import seaborn as sns
-import itertools
-import lib.display 
-import os
-from lib import DataLoad as Dl
 
 results_keys_dict = { "names":"変数名"
                     ,"coef":"偏回帰係数"
@@ -30,8 +26,7 @@ st.header(":beginner: 概要",divider="rainbow")
 """
 #-------------header end-------------------------------------------------------
 
-###------- 共通:カレントディレクトリ情報の取得 Begin -------
-from lib import Dataload_form as Df
+##------- 共通:カレントディレクトリ情報の取得 Begin -------
 if "location_str" in st.session_state:
     location_str = st.session_state.location_str
 else :
@@ -47,13 +42,14 @@ else :
 ###------- 共通:カレントディレクトリ情報の取得 End   -------
 
 ##------  共通：データの取得 Begin ------------------------------
-tmp_sidebar_text  = "基本統計量計算のオプション"
+tmp_sidebar_text  = "線形回帰分析のオプション"
 tmp_data_path     = "sample_datas"
 tmp_data_encoding = 'shift_jis'
 tmp_data_dict     = { "擬似データ１":"sampledata01.csv"
                      ,"擬似データ２":"sampledata02.csv"}   
 
 ##  自作関数
+import lib.Dataload as Dl
 read_data_df = Dl.data_load_form(sidebar_text=tmp_sidebar_text
                                 , cd_path=tmp_cd_path
                                 , data_path= tmp_data_path
