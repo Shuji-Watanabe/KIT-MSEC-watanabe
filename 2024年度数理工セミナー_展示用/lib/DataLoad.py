@@ -2,6 +2,7 @@ def data_load_form(sidebar_text, cd_path, data_path , data_encoding, data_dict):
     import streamlit as st
     import pandas as pd
     import os
+    from chardet import detect
     #=====使用データの設定=====================================================================
     st.sidebar.subheader(sidebar_text)
     st.sidebar.markdown(":arrow_forward: 分析に使用するデータの選択")
@@ -21,7 +22,14 @@ def data_load_form(sidebar_text, cd_path, data_path , data_encoding, data_dict):
         select_str = st.selectbox("分析するデータファイルを選択してください",select_data_dict.keys(),key="mselect 01")      
         filedir_path = os.path.join(cd_path,data_path) 
         csv_path = os.path.join(filedir_path,data_dict[select_str])
-        read_data_df = pd.read_csv( str(csv_path),encoding=data_encoding)
+        
+        # エンコーディング検出機能を使う
+        with open(csv_path, "rb") as f:
+            raw_data = f.read(10000)  # 最初の1万バイトを読み取る
+            result = detect(raw_data)
+        data_encoding = result["encoding"].lower()    
+        data_encoding = data_encoding.replace("-","_") 
+        read_data_df = pd.read_csv( str(csv_path) ,encoding=data_encoding)
 
 
     ###  ユーザーデータによる分析体験

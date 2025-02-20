@@ -96,6 +96,7 @@ ax = data_df.plot.hist(bins=bin_num,rwidth=0.9,alpha=0.5)
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import japanize_matplotlib
 import streamlit as st
 from scipy.stats import norm
 
