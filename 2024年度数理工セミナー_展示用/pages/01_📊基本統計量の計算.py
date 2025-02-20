@@ -74,6 +74,8 @@ tmp_data_dict     = { "擬似データ１":"sampledata01.csv"
                      ,"擬似データ２":"sampledata02.csv"}   
 
 ##  自作関数
+import os 
+st.write(os.getcwd())
 from lib import Dataload as Dl
 read_data_df = Dl.data_load_form(sidebar_text=tmp_sidebar_text
                                 , cd_path=tmp_cd_path
