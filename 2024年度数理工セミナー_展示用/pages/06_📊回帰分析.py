@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import lib.DataLoad as dl
 
 results_keys_dict = { "names":"変数名"
                     ,"coef":"偏回帰係数"
@@ -13,8 +14,9 @@ results_keys_dict = { "names":"変数名"
                     ,"r2":"決定係数"
                     ,"adj_r2":"自由度調整済決定係数"}
 
+title_text="回帰分析"
 #-------------title begin-----------------------------------------------------
-st.title("回帰分析")
+st.title(title_text)
 #-------------title end-------------------------------------------------------
 
 #-------------header begin-----------------------------------------------------
@@ -29,11 +31,12 @@ st.header(":beginner: 概要",divider="rainbow")
 ##------- 共通:カレントディレクトリ情報の取得 Begin -------
 if "location_str" in st.session_state:
     location_str = st.session_state.location_str
+    st.write(location_str)
 else :
     from lib import FileProcessing as fp
     location_str = fp.location()
+    st.write(location_str)
     st.session_state.location_str = location_str
-
 if location_str == "streamlit_Community_Cloud":
     #これはプログラムのある位置が変更されたときに毎回変える
     tmp_cd_path = "2024年度数理工セミナー_展示用" 
@@ -42,15 +45,14 @@ else :
 ###------- 共通:カレントディレクトリ情報の取得 End   -------
 
 ##------  共通：データの取得 Begin ------------------------------
-tmp_sidebar_text  = "線形回帰分析のオプション"
+tmp_sidebar_text  = f"{title_text}のオプション"
 tmp_data_path     = "sample_datas"
 tmp_data_encoding = 'shift_jis'
 tmp_data_dict     = { "擬似データ１":"sampledata01.csv"
                      ,"擬似データ２":"sampledata02.csv"}   
 
 ##  自作関数
-import lib.Dataload as Dl
-read_data_df = Dl.data_load_form(sidebar_text=tmp_sidebar_text
+read_data_df = dl.data_load_form(sidebar_text=tmp_sidebar_text
                                 , cd_path=tmp_cd_path
                                 , data_path= tmp_data_path
                                 , data_encoding=tmp_data_encoding

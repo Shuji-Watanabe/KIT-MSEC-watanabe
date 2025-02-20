@@ -4,10 +4,12 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
+import lib.DataLoad as dl
 
+title_text = "ヒストグラム"
 
 #-------------title begin-----------------------------------------------------
-st.title("ヒストグラム")
+st.title(title_text)
 #-------------title end-------------------------------------------------------
 
 #-------------header begin-----------------------------------------------------
@@ -15,14 +17,15 @@ st.header(":beginner: 概要",divider="rainbow")
 """ここでは，データのヒストグラムを作成します．"""
 #-------------header end-------------------------------------------------------
 
-###------- 共通:カレントディレクトリ情報の取得 Begin -------
+##------- 共通:カレントディレクトリ情報の取得 Begin -------
 if "location_str" in st.session_state:
     location_str = st.session_state.location_str
+    st.write(location_str)
 else :
     from lib import FileProcessing as fp
     location_str = fp.location()
+    st.write(location_str)
     st.session_state.location_str = location_str
-
 if location_str == "streamlit_Community_Cloud":
     #これはプログラムのある位置が変更されたときに毎回変える
     tmp_cd_path = "2024年度数理工セミナー_展示用" 
@@ -31,20 +34,21 @@ else :
 ###------- 共通:カレントディレクトリ情報の取得 End   -------
 
 ##------  共通：データの取得 Begin ------------------------------
-tmp_sidebar_text  = "ヒストグラムのオプション"
+tmp_sidebar_text  = f"{title_text}のオプション"
 tmp_data_path     = "sample_datas"
 tmp_data_encoding = 'shift_jis'
 tmp_data_dict     = { "擬似データ１":"sampledata01.csv"
                      ,"擬似データ２":"sampledata02.csv"}   
 
 ##  自作関数
-import lib.Dataload as Dl
-read_data_df = Dl.data_load_form(sidebar_text=tmp_sidebar_text
+read_data_df = dl.data_load_form(sidebar_text=tmp_sidebar_text
                                 , cd_path=tmp_cd_path
                                 , data_path= tmp_data_path
                                 , data_encoding=tmp_data_encoding
                                 , data_dict = tmp_data_dict)
 ##------  共通：データの取得 End   ------------------------------
+
+
 st.sidebar.divider()
 #===============================================================================================    
 # 分析データ列の選択
