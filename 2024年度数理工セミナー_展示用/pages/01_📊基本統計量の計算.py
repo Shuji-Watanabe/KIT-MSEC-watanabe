@@ -50,17 +50,19 @@ with rightside:
         - 2行目以降：データ
         """
 
-tmp_sidebar_text = "基本統計量計算のオプション"
-tmp_data_path = "sample_datas/scatter_data01.csv"
+##------  共通：データの取得 Begin ------------------------------
+tmp_sidebar_text  = "基本統計量計算のオプション"
+tmp_data_path     = "sample_datas/scatter_data01.csv"
 tmp_data_encoding = 'shift_jis'
 
+##  自作関数
 data_df = Df.data_load_form(sidebar_text=tmp_sidebar_text
                             , cd_path=tmp_cd_path
                             , data_path= tmp_data_path
                             , data_encoding=tmp_data_encoding)
+##------  共通：データの取得 End   ------------------------------
+
 st.divider()
-
-
 st.subheader(f"Step２: 基本統計量の計算", divider="green")
 if st.button("計算の実行",key="button 01"):
     with st.spinner('作成中'):

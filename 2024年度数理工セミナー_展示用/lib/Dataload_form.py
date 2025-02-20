@@ -22,8 +22,13 @@ def data_load_form(sidebar_text, cd_path, data_path , data_encoding):
         with input_col[0]:
             # データの読み込み
             if select_data_dict[select_str] == 0:
-                #デモデータの読み込み 
-                read_data_df = pd.read_csv( cd_path+"/"+data_path,encoding=data_encoding)
+                #デモデータの読み込み
+                if cd_path :
+                    csv_path = cd_path+"/"+data_path
+                else :
+                    csv_path = data_path
+                    
+                read_data_df = pd.read_csv( csv_path,encoding=data_encoding)
             else :
                 st.stop()
     ###  ユーザーデータによる分析体験
