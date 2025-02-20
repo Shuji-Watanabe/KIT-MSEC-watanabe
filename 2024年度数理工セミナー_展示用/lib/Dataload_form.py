@@ -65,24 +65,4 @@ def data_load_form(sidebar_text, cd_path, data_path , data_encoding):
                                                             ,selected_type=selected_way
                                                             ,DisplayLocation="sidebar")
 
-    st.sidebar.divider()
-    #===============================================================================================    
-    # 分析データ列の選択
-    keys_list = list(read_data_df.keys())
-    input_col = st.columns([1,1])
-    with input_col[0]:
-        index_str = st.selectbox("データの選択",keys_list  ,key="mselect 02")
-        if not index_str:
-            """"""
-            st.error("データを選択してください")
-            st.stop()
-    with input_col[1]:
-        data_df = read_data_df[index_str]
-        data_len = data_df.shape[0]
-        st.write("")
-        st.dataframe(data_df
-                        , use_container_width=True
-                        , height=200)
-    st.success(f'準備完了', icon="✅") 
-    #===============================================================================================
-    return data_df
+    return read_data_df

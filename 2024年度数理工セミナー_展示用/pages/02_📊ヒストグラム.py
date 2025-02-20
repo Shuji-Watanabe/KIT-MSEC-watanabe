@@ -40,11 +40,32 @@ tmp_data_path     = "sample_datas/hist_data01.csv"
 tmp_data_encoding = 'shift_jis'
 
 ##  自作関数
-data_df = Df.data_load_form(sidebar_text=tmp_sidebar_text
+read_data_df = Df.data_load_form(sidebar_text=tmp_sidebar_text
                             , cd_path=tmp_cd_path
                             , data_path= tmp_data_path
                             , data_encoding=tmp_data_encoding)
 ##------  共通：データの取得 End   ------------------------------
+
+st.sidebar.divider()
+#===============================================================================================    
+# 分析データ列の選択
+keys_list = list(read_data_df.keys())
+input_col = st.columns([1,1])
+with input_col[0]:
+    index_str = st.multiselect("データの選択",keys_list  ,key="mselect 02")
+    if not index_str:
+        """"""
+        st.error("データを選択してください")
+        st.stop()
+with input_col[1]:
+    data_df = read_data_df[index_str]
+    data_len = data_df.shape[0]
+    st.write("")
+    st.dataframe(data_df
+                    , use_container_width=True
+                    , height=200)
+st.success(f'準備完了', icon="✅") 
+#===============================================================================================
 
 
 ## Step 2 #### 
@@ -65,5 +86,5 @@ st.sidebar.write(f"{select_bins_str} で得られたbin数 = {bin_num}")
 st.sidebar.divider()
 
 # ヒストグラムの作成
-ax = data_df.plot.hist(bins=bin_num,rwidth=0.9)
+ax = data_df.plot.hist(bins=bin_num,rwidth=0.9,alpha=0.5)
 st.pyplot(ax.figure)
