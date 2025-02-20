@@ -6,8 +6,11 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import lib.DataLoad as dl
 
-title_text = "ヒストグラム"
 
+# サイドバーを初期状態で表示する
+st.set_page_config(initial_sidebar_state="expanded")
+
+title_text = "ヒストグラム"
 #-------------title begin-----------------------------------------------------
 st.title(title_text)
 #-------------title end-------------------------------------------------------

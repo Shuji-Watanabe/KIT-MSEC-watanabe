@@ -4,6 +4,8 @@ import numpy as np
 import lib.Functions as Functions
 import lib.DataLoad as dl
 
+# サイドバーを初期状態で表示する
+st.set_page_config(initial_sidebar_state="expanded")
 
 title_text = "基本統計量"
 

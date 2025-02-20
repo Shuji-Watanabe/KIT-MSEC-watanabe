@@ -6,6 +6,9 @@ import itertools
 import lib.display 
 import lib.DataLoad as dl
 
+# サイドバーを初期状態で表示する
+st.set_page_config(initial_sidebar_state="expanded")
+
 title_text="偏相関係数行列"
 #-------------title begin-----------------------------------------------------
 st.title(title_text)

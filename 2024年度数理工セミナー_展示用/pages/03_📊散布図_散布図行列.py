@@ -5,6 +5,10 @@ import seaborn as sns
 import japanize_matplotlib
 import lib.DataLoad as dl
 
+# サイドバーを初期状態で表示する
+st.set_page_config(initial_sidebar_state="expanded")
+
+
 title_text="散布図行列"
 #-------------title begin-----------------------------------------------------
 st.title(title_text)

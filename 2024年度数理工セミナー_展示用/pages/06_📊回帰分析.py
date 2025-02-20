@@ -14,6 +14,10 @@ results_keys_dict = { "names":"変数名"
                     ,"r2":"決定係数"
                     ,"adj_r2":"自由度調整済決定係数"}
 
+
+# サイドバーを初期状態で表示する
+st.set_page_config(initial_sidebar_state="expanded")
+
 title_text="回帰分析"
 #-------------title begin-----------------------------------------------------
 st.title(title_text)
