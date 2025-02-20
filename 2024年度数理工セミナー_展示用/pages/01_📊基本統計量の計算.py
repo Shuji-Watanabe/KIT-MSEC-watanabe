@@ -70,7 +70,9 @@ tmp_data_dict     = { "擬似データ１":"sampledata01.csv"
 ##  自作関数
 if location_str == "streamlit_Community_Cloud":
     #これはプログラムのある位置が変更されたときに毎回変える
-    from 2024年度数理工セミナー_展示用.lib import Dataload as Dl
+    import sys
+    sys.path.append('2024年度数理工セミナー_展示用')
+    import lib.Dataload as Dl
 else :
     tmp_cd_path = ""
     from lib import Dataload as Dl
