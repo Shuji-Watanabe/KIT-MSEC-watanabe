@@ -68,15 +68,15 @@ tmp_data_dict     = { "擬似データ１":"sampledata01.csv"
                      ,"擬似データ２":"sampledata02.csv"}   
 
 ##  自作関数
-if location_str == "streamlit_Community_Cloud":
-    #これはプログラムのある位置が変更されたときに毎回変える
-    import sys
-    import os 
-    sys.path.append(os.path.join(os.getcwd(),'2024年度数理工セミナー_展示用'))
-    from lib2 import Dataload as Dl
-else :
-    tmp_cd_path = ""
-    from lib import Dataload as Dl
+# if location_str == "streamlit_Community_Cloud":
+#     #これはプログラムのある位置が変更されたときに毎回変える
+#     import sys
+#     import os 
+#     sys.path.append(os.path.join(os.getcwd(),'2024年度数理工セミナー_展示用'))
+#     from lib2 import Dataload as Dl
+# else :
+#     tmp_cd_path = ""
+from lib import Dataload as Dl
 read_data_df = Dl.data_load_form(sidebar_text=tmp_sidebar_text
                                 , cd_path=tmp_cd_path
                                 , data_path= tmp_data_path
