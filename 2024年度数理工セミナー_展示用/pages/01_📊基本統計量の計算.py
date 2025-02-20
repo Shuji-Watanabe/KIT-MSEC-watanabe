@@ -73,7 +73,7 @@ if location_str == "streamlit_Community_Cloud":
     import sys
     import os 
     sys.path.append(os.path.join(os.getcwd(),'2024年度数理工セミナー_展示用'))
-    from lib import Dataload as Dl
+    from lib2 import Dataload as Dl
 else :
     tmp_cd_path = ""
     from lib import Dataload as Dl
