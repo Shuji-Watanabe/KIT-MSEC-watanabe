@@ -31,11 +31,9 @@ st.header(":beginner: 概要",divider="rainbow")
 ##------- 共通:カレントディレクトリ情報の取得 Begin -------
 if "location_str" in st.session_state:
     location_str = st.session_state.location_str
-    st.write(location_str)
 else :
     from lib import FileProcessing as fp
     location_str = fp.location()
-    st.write(location_str)
     st.session_state.location_str = location_str
 if location_str == "streamlit_Community_Cloud":
     #これはプログラムのある位置が変更されたときに毎回変える
