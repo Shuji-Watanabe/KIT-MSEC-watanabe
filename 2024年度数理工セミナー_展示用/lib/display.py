@@ -1,3 +1,38 @@
+def display_URL_QRCode():
+    import os
+    import socket
+
+    path = os.getcwd()
+    data_path = path+"/基本データ"
+
+
+    # ホストIPアドレスを取得
+    def get_host_ip():
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            # GoogleのDNSサーバーに接続（IPアドレスは実際には送信されない）
+            s.connect(("8.8.8.8", 80))
+            ip = s.getsockname()[0]
+        except Exception:
+            ip = "127.0.0.1"  # デフォルト（ローカル）
+        finally:
+            s.close()
+        return ip
+
+    # ポート番号を取得
+    port = os.environ.get("STREAMLIT_SERVER_PORT", "8501")
+    host_ip = get_host_ip()
+    network_url = f"http://{host_ip}:{port}"
+
+    # Network URL を表示
+    from qrcode import QRCode
+    qr = QRCode()
+    qr.add_data(network_url)
+    qr.make()  # QRコードを生成
+    qr_image = qr.make_image()  # QRコードの画像を生成
+    return network_url, qr_image
+
+
 def explanation_corr(val):
     if  0 <= val :
         tmp_str = "正"

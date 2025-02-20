@@ -102,6 +102,7 @@ import streamlit as st
 from scipy.stats import norm
 
 st.sidebar.divider()
+st.sidebar.write(":arrow_forward:　グラフに関するオプション")
 add_legend_cb = st.sidebar.checkbox("凡例の表示",value=True)
 # ヒストグラムの描画（色を取得するために一旦プロット）
 ax = data_df.plot.hist(  bins=bin_num
@@ -115,9 +116,9 @@ handles, labels = ax.get_legend_handles_labels()
 colors = [h.get_facecolor() for h in handles] 
 # st.write(colors)
 
-st.sidebar.divider()
 add_norm_cb = st.sidebar.checkbox("正規分布のグラフを描画",value=False)
-st.sidebar.write("ヒストグラムに使用しているデータの平均と標準偏差を使用した正規分布を重ねてプロットします．")
+with st.sidebar.expander("描画される正規分布について"):
+    ("ヒストグラムに使用しているデータの平均と標準偏差を使用した正規分布を重ねてプロットします．")
 if add_norm_cb :
     # 各列のヒストグラムの色を取得して正規分布をプロット
     for i, col in enumerate(data_df.columns):
