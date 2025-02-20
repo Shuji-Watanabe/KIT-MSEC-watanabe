@@ -23,8 +23,7 @@ def data_load_form(sidebar_text, cd_path, data_path , data_encoding):
             # データの読み込み
             if select_data_dict[select_str] == 0:
                 #デモデータの読み込み 
-                st.write(cd_path+data_path)
-                read_data_df = pd.read_csv( cd_path+data_path,encoding=data_encoding)
+                read_data_df = pd.read_csv( cd_path+"/"+data_path,encoding=data_encoding)
             else :
                 st.stop()
     ###  ユーザーデータによる分析体験
