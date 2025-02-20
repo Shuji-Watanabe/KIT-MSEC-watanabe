@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import lib.Functions as Functions
-from lib import Dataload_form as Df
+
 
 if "location_str" in st.session_state:
     location_str = st.session_state.location_str
@@ -52,16 +52,20 @@ with rightside:
 
 ##------  共通：データの取得 Begin ------------------------------
 tmp_sidebar_text  = "基本統計量計算のオプション"
-tmp_data_path     = "sample_datas/scatter_data01.csv"
+tmp_data_path     = "sample_datas"
 tmp_data_encoding = 'shift_jis'
-tmp_data_dict     = {"デモデータ１":0}   
+tmp_data_dict     = { "擬似データ１":"sampledata01.csv"
+                     ,"擬似データ２":"sampledata02.csv"}   
+
 ##  自作関数
-read_data_df = Df.data_load_form(sidebar_text=tmp_sidebar_text
-                            , cd_path=tmp_cd_path
-                            , data_path= tmp_data_path
-                            , data_encoding=tmp_data_encoding
-                            , data_dict = tmp_data_dict)
+from lib import DataLoad as Dl
+read_data_df = Dl.data_load_form(sidebar_text=tmp_sidebar_text
+                                , cd_path=tmp_cd_path
+                                , data_path= tmp_data_path
+                                , data_encoding=tmp_data_encoding
+                                , data_dict = tmp_data_dict)
 ##------  共通：データの取得 End   ------------------------------
+
 st.sidebar.divider()
 #===============================================================================================    
 # 分析データ列の選択
@@ -85,24 +89,26 @@ st.success(f'準備完了', icon="✅")
 
 st.divider()
 st.subheader(f"Step２: 基本統計量の計算", divider="green")
-if st.button("計算の実行",key="button 01"):
-    with st.spinner('作成中'):
-        output = Functions.compute_statistics(data_df)
-        # 計算結果の表示
-        disp_col1 = st.columns(4)
-        disp_col1[0].metric(label="データ数",value=output["データ数"])
-        disp_col1[1].metric(label="合計",value=output['合計'])
-        disp_col1[2].metric(label="最大値",value=output['最大値'])
-        disp_col1[3].metric(label="最小値",value=output['最小値'])
-        st.divider()
-        disp_col2 = st.columns(4)
-        disp_col2[0].metric(label="平均 ",value=f"{output['平均']:4.1f}")
-        disp_col2[1].metric(label="標準偏差",value=f"{output['標準偏差']:4.1f}")
-        st.divider()
-        disp_col3 = st.columns(4)
-        disp_col3[0].metric(label="中央値 ",value=f"{output['中央値']:4.1f}")
-        disp_col3[1].metric(label="第一四分位数",value=f"{float(output['四分位数'][0]):4.1f}")
-        disp_col3[2].metric(label="第二四分位数",value=f"{float(output['四分位数'][1]):4.1f}")
-        disp_col3[3].metric(label="第三四分位数",value=f"{float(output['四分位数'][2]):4.1f}")
-        st.divider()
 
+with st.spinner('作成中'):
+    output = Functions.compute_statistics(data_df)
+    # 計算結果の表示
+    disp_col1 = st.columns(4)
+    disp_col1[0].metric(label="データ数",value=output["データ数"])
+    disp_col1[1].metric(label="合計",value=output['合計'])
+    disp_col1[2].metric(label="最大値",value=output['最大値'])
+    disp_col1[3].metric(label="最小値",value=output['最小値'])
+    st.divider()
+    disp_col2 = st.columns(4)
+    disp_col2[0].metric(label="平均 ",value=f"{output['平均']:4.1f}")
+    disp_col2[1].metric(label="標準偏差",value=f"{output['標準偏差']:4.1f}")
+    st.divider()
+    disp_col3 = st.columns(4)
+    disp_col3[0].metric(label="中央値 ",value=f"{output['中央値']:4.1f}")
+    disp_col3[1].metric(label="第一四分位数",value=f"{float(output['四分位数'][0]):4.1f}")
+    disp_col3[2].metric(label="第二四分位数",value=f"{float(output['四分位数'][1]):4.1f}")
+    disp_col3[3].metric(label="第三四分位数",value=f"{float(output['四分位数'][2]):4.1f}")
+    st.divider()
+
+    # ax = pd.DataFrame(data_df).plot.box(vert=False)
+    # st.pyplot(ax.figure)
