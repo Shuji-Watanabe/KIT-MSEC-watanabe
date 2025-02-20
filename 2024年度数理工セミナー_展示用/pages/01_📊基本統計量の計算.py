@@ -54,7 +54,6 @@ tmp_sidebar_text = "基本統計量計算のオプション"
 tmp_data_path = "sample_datas/scatter_data01.csv"
 tmp_data_encoding = 'shift_jis'
 
-st.write(tmp_cd_path)
 data_df = Df.data_load_form(sidebar_text=tmp_sidebar_text
                             , cd_path=tmp_cd_path
                             , data_path= tmp_data_path
