@@ -8,3 +8,4 @@ pingouin
 streamlit_folium
 folium
 chardet
+qrcode
