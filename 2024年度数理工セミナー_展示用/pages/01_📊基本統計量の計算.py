@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import lib.Functions as Functions
-
+import lib.DataLoad as dl
 
 if "location_str" in st.session_state:
     location_str = st.session_state.location_str
@@ -53,6 +53,7 @@ with rightside:
 ##------- 共通:カレントディレクトリ情報の取得 Begin -------
 if "location_str" in st.session_state:
     location_str = st.session_state.location_str
+    st.write(location_str)
 else :
     from lib import FileProcessing as fp
     location_str = fp.location()
@@ -76,7 +77,6 @@ tmp_data_dict     = { "擬似データ１":"sampledata01.csv"
 #     from lib2 import Dataload as Dl
 # else :
 #     tmp_cd_path = ""
-import lib.Dataload as dl
 read_data_df = dl.data_load_form(sidebar_text=tmp_sidebar_text
                                 , cd_path=tmp_cd_path
                                 , data_path= tmp_data_path
