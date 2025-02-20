@@ -65,7 +65,7 @@ with right_col:
 
 st.page_link("00_Data_Analysis_Apps.py", label="Home", icon="🏠")
 st.page_link("pages/01_📊基本統計量の計算.py", label="基本統計量の計算へ", icon="📊")
-st.page_link("pages/02_📊ヒストグラム.py", label="ヒストグラムの作成へ", icon="📊")
+st.page_link("pages/02_📊Histgram.py", label="ヒストグラムの作成へ", icon="📊")
 st.page_link("pages/03_📊散布図_散布図行列.py", label="散布図または散布図行列の作成へ", icon="📊")
 st.page_link("pages/04_📊相関係数行列.py", label="相関係数行列の計算へ", icon="📊")
 st.page_link("pages/05_📊偏相関係数行列.py", label="偏相関係数行列の計算へ", icon="📊")
