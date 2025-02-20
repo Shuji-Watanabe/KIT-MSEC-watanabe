@@ -21,6 +21,7 @@ def data_load_form(sidebar_text, cd_path, data_path , data_encoding, data_dict):
         select_str = st.selectbox("分析するデータファイルを選択してください",select_data_dict.keys(),key="mselect 01")      
         filedir_path = os.path.join(cd_path,data_path) 
         csv_path = os.path.join(filedir_path,data_dict[select_str])
+        st.write(csv_path)
         read_data_df = pd.read_csv( str(csv_path),encoding=data_encoding)
 
 
