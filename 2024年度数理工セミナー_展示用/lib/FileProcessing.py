@@ -1,3 +1,12 @@
+def location(streamlit_path='/mount/src/kit-msec-watanabe'):
+    import os 
+    cwd_path = os.getcwd()
+    if cwd_path == streamlit_path:
+        location_str = "streamlit_Community_Cloud"
+    else:
+        location_str = "local"
+    return location_str
+
 def streamlit_uploaded_csv(st_uploaded_files, selected_type="自動",DisplayLocation = "normal"):
     import streamlit as st
     import pandas as pd

@@ -19,17 +19,12 @@ st.subheader("公開場所",divider="rainbow")
 st.markdown("[公開場所](https://github.com/Shuji-Watanabe/KIT-MSEC-watanabe)")
 st.subheader("ダウンロード方法",divider="rainbow")
 
-import os 
-cwd_path = os.getcwd()
-
-if cwd_path == '/mount/src/kit-msec-watanabe':
-    location_str = "github"
-else:
-    location_str = "local"
-
+from lib import FileProcessing as fp
+location_str = fp.location()
+st.session_state.location_str = location_str
 
 # location_str == 'github'はStreamlitのCommunity Cloudを利用する場合のファイルパス
-if location_str == 'github' :
+if location_str == "streamlit_Community_Cloud" :
     tmp_path = "2024年度数理工セミナー_展示用/media/expl_download"
 else :
     tmp_path = "media/expl_download"

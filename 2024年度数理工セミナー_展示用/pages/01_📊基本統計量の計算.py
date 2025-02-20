@@ -3,6 +3,20 @@ import pandas as pd
 import numpy as np
 import lib.Functions as Functions
 
+
+if "location_str" in st.session_state:
+    location_str = st.session_state.location_str
+else :
+    from lib import FileProcessing as fp
+    location_str = fp.location()
+    st.session_state.location_str = location_str
+
+if location_str == "streamlit_Community_Cloud":
+    #これはプログラムのある位置が変更されたときに毎回変える
+    tmp_cd_path = "2024年度数理工セミナー_展示用" 
+else :
+    tmp_cd_path = ""
+
 #-------------title begin-----------------------------------------------------
 st.title("基本統計量の計算")
 #-------------title end-------------------------------------------------------
@@ -57,14 +71,11 @@ if tub_dict[selected_cbox] == 0 :
     with input_col[0]:
         # 分析データの選択
         select_str = st.selectbox("分析するデータを選択してください",select_data_dict.keys(),key="mselect 01")
-
         # データの読み込み
         if select_data_dict[select_str] == 0:
             #デモデータ『hist_data01.csv』の読み込み 
-            try :
-                read_data_df = pd.read_csv("sample_datas/scatter_data01.csv",encoding='shift_jis')
-            except:
-                read_data_df = pd.read_csv("2024年度数理工セミナー_展示用/sample_datas/scatter_data01.csv",encoding='shift_jis')
+                read_data_df = pd.read_csv( tmp_cd_path+"sample_datas/scatter_data01.csv"
+                                           ,encoding='shift_jis')
         else :
             st.stop()
 
