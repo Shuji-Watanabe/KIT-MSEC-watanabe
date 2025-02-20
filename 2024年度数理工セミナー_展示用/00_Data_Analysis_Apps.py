@@ -1,5 +1,11 @@
 import streamlit as st
 
+# プログラムの実行場所の取得
+from lib import FileProcessing as fp
+location_str = fp.location()
+st.session_state.location_str = location_str
+
+
 # タイトル
 main_title = ":male-teacher:データ分析支援アプリ"
 st.title(f"{main_title}")
@@ -10,7 +16,8 @@ st.subheader("Network URL 情報", divider="rainbow")
 
 from lib import display
 from io import BytesIO
-network_url, qr_image = display.display_URL_QRCode()
+network_url, qr_image = display.display_URL_QRCode(location_str)
+
 # メモリ上に画像を保存
 img_bytes = BytesIO()
 qr_image.save(img_bytes, format="PNG")  # 画像フォーマットを指定
@@ -37,12 +44,6 @@ with left_col:
     st.markdown("[公開場所](https://github.com/Shuji-Watanabe/KIT-MSEC-watanabe)")
 with right_col:
     st.subheader("ソースコードのダウンロード方法",divider="green")
-
-    # プログラムの実行場所の取得
-    from lib import FileProcessing as fp
-    location_str = fp.location()
-    st.session_state.location_str = location_str
-
 
     # location_str == 'github'はStreamlitのCommunity Cloudを利用する場合のファイルパス
     if location_str == "streamlit_Community_Cloud" :

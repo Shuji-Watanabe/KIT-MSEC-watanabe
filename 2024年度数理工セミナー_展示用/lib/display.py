@@ -1,29 +1,32 @@
-def display_URL_QRCode():
+def display_URL_QRCode(location_str):
     import os
     import socket
 
-    path = os.getcwd()
-    data_path = path+"/基本データ"
+    if location_str == "streamlit_Community_Cloud": 
+        network_url = "https://kit-msec-watanabe-data-analysis-apps.streamlit.app"
+    else :
+        path = os.getcwd()
+        data_path = path+"/基本データ"
 
+        
+        # ホストIPアドレスを取得
+        def get_host_ip():
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            try:
+                # GoogleのDNSサーバーに接続（IPアドレスは実際には送信されない）
+                s.connect(("8.8.8.8", 80))
+                ip = s.getsockname()[0]
+            except Exception:
+                ip = "127.0.0.1"  # デフォルト（ローカル）
+            finally:
+                s.close()
+            return ip
 
-    # ホストIPアドレスを取得
-    def get_host_ip():
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        try:
-            # GoogleのDNSサーバーに接続（IPアドレスは実際には送信されない）
-            s.connect(("8.8.8.8", 80))
-            ip = s.getsockname()[0]
-        except Exception:
-            ip = "127.0.0.1"  # デフォルト（ローカル）
-        finally:
-            s.close()
-        return ip
-
-    # ポート番号を取得
-    port = os.environ.get("STREAMLIT_SERVER_PORT", "8501")
-    host_ip = get_host_ip()
-    network_url = f"http://{host_ip}:{port}"
-
+        # ポート番号を取得
+        port = os.environ.get("STREAMLIT_SERVER_PORT", "8501")
+        host_ip = get_host_ip()
+        network_url = f"http://{host_ip}:{port}"
+        
     # Network URL を表示
     from qrcode import QRCode
     qr = QRCode()
