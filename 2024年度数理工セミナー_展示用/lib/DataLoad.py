@@ -40,12 +40,27 @@ def data_load_form(sidebar_text, cd_path, data_path ,data_dict):
         st.header(f""":bar_chart: {tub_title }を用いた分析""",divider="rainbow")
         """   """
         st.subheader(f"Step１: 分析データのアップロード", divider="green")
-        if 'filename' in st.session_state:
-            st.success(f"現在分析に使用しているファイル：{st.session_state.filename}")
         tmp_dict = { "前回アップロードしたデータを使用し続ける":True
                     ,"新しいファイルをアップロードする":False}
+        
+        with st.form(key="reset"):
+            if 'filename' in st.session_state:
+                st.write(f"現在分析に使用しているファイル：{st.session_state.filename}")
+                tmp_button = st.form_submit_button("データファイルをリセット")
+                radio_index = 0
+                # 特定の変数だけをクリア
+                if tmp_button:
+                    del st.session_state["filename"]
+                    del st.session_state["userdata"]
+                    radio_index = 1
+            else:
+                radio_index = 1
+
         select_radio = st.sidebar.radio("使用するユーザーデータについて"
-                                        ,options=tmp_dict.keys())
+                                        ,options=tmp_dict.keys()
+                                        ,index = radio_index)
+        if 'filename' in st.session_state:
+            st.sidebar.write(f"データファイル{st.session_state.filename}")
         if  "userdata" in st.session_state and tmp_dict[select_radio]:
             read_data_df = st.session_state.userdata
         else :
@@ -54,7 +69,6 @@ def data_load_form(sidebar_text, cd_path, data_path ,data_dict):
                 st.warning("データをアップロードする前に，アップロードするデータに個人情報等，取扱に注意しなければならないデータが含まれていないか確認してください．")
             with disp_col0[0]:
                 tmp_check = st.checkbox("確認しました")
-            st.sidebar.divider()
 
             if tmp_check:
                 st.divider()
@@ -66,7 +80,7 @@ def data_load_form(sidebar_text, cd_path, data_path ,data_dict):
             else :
                 st.sidebar.write("停止中")
                 st.stop()
-        
+
             st.sidebar.divider()
             set_encode_list = ["自動","選択","入力"]
             selected_way = st.sidebar.radio(":arrow_forward: エンコードの指定方法",options=set_encode_list,horizontal=True)

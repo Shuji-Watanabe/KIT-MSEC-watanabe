@@ -64,6 +64,8 @@ with input_col[1]:
 st.success(f'準備完了', icon="✅") 
 #===============================================================================================
 
+if not 'filename' in st.session_state:
+    st.sidebar.divider()
 #-------------subheader begin----------------------------------------------
 st.subheader(f"Step２: データの相関係数行列", divider="green")
 #-------------subheader end------------------------------------------------

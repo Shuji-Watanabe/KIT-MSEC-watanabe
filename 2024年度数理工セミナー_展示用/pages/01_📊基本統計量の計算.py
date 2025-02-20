@@ -68,7 +68,8 @@ read_data_df = dl.data_load_form(sidebar_text=tmp_sidebar_text
                                 , data_dict = tmp_data_dict)
 ##------  共通：データの取得 End   ------------------------------
 
-st.sidebar.divider()
+if not 'filename' in st.session_state:
+    st.sidebar.divider()
 #===============================================================================================    
 # 分析データ列の選択
 keys_list = list(read_data_df.keys())

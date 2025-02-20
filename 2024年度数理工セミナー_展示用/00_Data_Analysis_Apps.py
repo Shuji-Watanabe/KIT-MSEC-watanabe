@@ -11,7 +11,7 @@ st.sidebar.markdown(\
 ")
 
 # タイトル
-main_title = ":male-teacher:データ分析支援アプリ"
+main_title = "データ分析支援アプリ:male-teacher:"
 st.title(f"{main_title}")
 
 

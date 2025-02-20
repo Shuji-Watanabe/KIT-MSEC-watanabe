@@ -45,8 +45,8 @@ read_data_df = dl.data_load_form(sidebar_text=tmp_sidebar_text
                                 , data_dict = tmp_data_dict)
 ##------  共通：データの取得 End   ------------------------------
 
-
-st.sidebar.divider()
+if not 'filename' in st.session_state:
+    st.sidebar.divider()
 #===============================================================================================    
 # 分析データ列の選択
 keys_list = list(read_data_df.keys())
@@ -75,6 +75,7 @@ from scipy.stats import norm
 
 st.subheader(f"Step２: ヒストグラムの作成", divider="green")
 bins_dict = {"Sturges’ Rule":1,"Scott’s Rule":2,"ユーザー設定":99}
+st.sidebar.divider()
 select_bins_str =st.sidebar.radio(label=":arrow_forward: bin数（階級の数）の設定方法"
                                     ,options=bins_dict.keys()
                                     ,horizontal=True,key="radio 01")

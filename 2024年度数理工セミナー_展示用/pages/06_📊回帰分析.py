@@ -55,7 +55,8 @@ read_data_df = dl.data_load_form(sidebar_text=tmp_sidebar_text
                                 , data_dict = tmp_data_dict)
 ##------  共通：データの取得 End   ------------------------------
 
-st.sidebar.divider()
+if not 'filename' in st.session_state:
+    st.sidebar.divider()
 #===============================================================================================    
 
 # 分析データ列の選択
@@ -98,6 +99,7 @@ with st.spinner('作成中'):
     coef_list = lr_results[lr_results["names"]==names_list]["coef"]
 
     disp_col1 = st.columns([2,5])
+    st.sidebar.divider()
     st.sidebar.markdown(":arrow_forward: 表示桁数の設定")
     r2_digit_num = st.sidebar.number_input(label="予測精度の評価の表示桁数",min_value=0,step=1,value=3)
     ana_digit_num = st.sidebar.number_input(label="偏回帰係数に関する分析の表示桁数",min_value=0,step=1,value=3)
