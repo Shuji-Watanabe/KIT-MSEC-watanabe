@@ -1,4 +1,4 @@
-def data_load_form(sidebar_text, cd_path, data_path , data_encoding, data_dict):
+def data_load_form(sidebar_text, cd_path, data_path ,data_dict):
     import streamlit as st
     import pandas as pd
     import os
