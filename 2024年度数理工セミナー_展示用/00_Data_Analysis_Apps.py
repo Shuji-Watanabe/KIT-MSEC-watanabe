@@ -13,16 +13,13 @@ st.title(f"{main_title}")
 
 ## URLとQRコードの表示
 st.subheader("Network URL 情報", divider="rainbow")
-
 from lib import display
 from io import BytesIO
 network_url, qr_image = display.display_URL_QRCode(location_str)
-
 # メモリ上に画像を保存
 img_bytes = BytesIO()
 qr_image.save(img_bytes, format="PNG")  # 画像フォーマットを指定
 img_bytes.seek(0)  # ストリームを先頭に移動
-
 
 left_col, right_col = st.columns([2,1])
 with left_col:
@@ -30,9 +27,10 @@ with left_col:
     st.code(network_url)
 with right_col:
     st.image(img_bytes, caption="QR Code", use_container_width=True)
-#
-st.subheader("このアプリについて",divider="rainbow")
 
+
+# アプリの説明
+st.subheader("このアプリについて",divider="rainbow")
 """
 このWebアプリは，金沢工業大学　2024年度数理工セミナー（展示ブース）で使用したWebアプリです．
 このWebアプリのデータはGitHubにて公開しています．
