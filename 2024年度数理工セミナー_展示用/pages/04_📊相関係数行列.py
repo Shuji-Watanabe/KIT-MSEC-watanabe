@@ -134,3 +134,5 @@ if ToF_dict[disp_heatmap]:
                 , vmax=1)
     # Streamlit で表示
     st.pyplot(plt)
+
+st.page_link("00_Data_Analysis_Apps.py", label="Home", icon="🏠")

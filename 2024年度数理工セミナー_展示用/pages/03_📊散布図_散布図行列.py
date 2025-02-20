@@ -80,3 +80,5 @@ if st.button("散布図の作成",key="button 01"):
         fig = sns.pairplot(data = data_df)
         st.pyplot(fig)
 
+
+st.page_link("00_Data_Analysis_Apps.py", label="Home", icon="🏠")

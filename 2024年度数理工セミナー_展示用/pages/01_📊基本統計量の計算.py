@@ -117,3 +117,6 @@ with st.spinner('作成中'):
 
     # ax = pd.DataFrame(data_df).plot.box(vert=False)
     # st.pyplot(ax.figure)
+
+
+st.page_link("00_Data_Analysis_Apps.py", label="Home", icon="🏠")

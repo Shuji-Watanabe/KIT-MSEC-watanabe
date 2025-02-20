@@ -134,3 +134,4 @@ with st.spinner('作成中'):
     st.latex(lr_expr_latex)    
     st.divider()
                 
+st.page_link("00_Data_Analysis_Apps.py", label="Home", icon="🏠")
