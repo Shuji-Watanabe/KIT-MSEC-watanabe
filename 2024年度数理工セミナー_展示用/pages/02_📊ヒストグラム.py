@@ -103,6 +103,7 @@ import japanize_matplotlib
 import streamlit as st
 from scipy.stats import norm
 
+
 st.sidebar.divider()
 st.sidebar.write(":arrow_forward:　グラフに関するオプション")
 add_legend_cb = st.sidebar.checkbox("凡例の表示",value=True)
