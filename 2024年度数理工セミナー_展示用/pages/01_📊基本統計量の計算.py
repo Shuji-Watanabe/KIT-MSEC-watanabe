@@ -54,12 +54,13 @@ with rightside:
 tmp_sidebar_text  = "基本統計量計算のオプション"
 tmp_data_path     = "sample_datas/scatter_data01.csv"
 tmp_data_encoding = 'shift_jis'
-
+tmp_data_dict     = {"デモデータ１":0}   
 ##  自作関数
 read_data_df = Df.data_load_form(sidebar_text=tmp_sidebar_text
                             , cd_path=tmp_cd_path
                             , data_path= tmp_data_path
-                            , data_encoding=tmp_data_encoding)
+                            , data_encoding=tmp_data_encoding
+                            , data_dict = tmp_data_dict)
 ##------  共通：データの取得 End   ------------------------------
 st.sidebar.divider()
 #===============================================================================================    

@@ -1,4 +1,4 @@
-def data_load_form(sidebar_text, cd_path, data_path , data_encoding):
+def data_load_form(sidebar_text, cd_path, data_path , data_encoding, data_dict):
     import streamlit as st
     import pandas as pd
     #=====使用データの設定=====================================================================
@@ -15,10 +15,10 @@ def data_load_form(sidebar_text, cd_path, data_path , data_encoding):
         st.header(f""":bar_chart: {tub_title }を用いた分析""",divider="rainbow")
         """   """
         st.subheader(f"Step１: 分析データの選択", divider="green")
-        select_data_dict = {"デモデータ１":0}   
+        select_data_dict = data_dict
         # 分析データの選択      
         input_col = st.columns([1,1])
-        select_str = st.selectbox("分析するデータを選択してください",select_data_dict.keys(),key="mselect 01")      
+        select_str = st.selectbox("分析するデータファイルを選択してください",select_data_dict.keys(),key="mselect 01")      
         with input_col[0]:
             # データの読み込み
             if select_data_dict[select_str] == 0:

@@ -5,6 +5,10 @@ from lib import FileProcessing as fp
 location_str = fp.location()
 st.session_state.location_str = location_str
 
+st.sidebar.markdown(\
+"**更新情報**\n \
+- App 1.0:2025.2.20\n\
+")
 
 # タイトル
 main_title = ":male-teacher:データ分析支援アプリ"
@@ -60,7 +64,3 @@ with right_col:
         image_path = tmp_path + "/expl_download.003.jpeg"
         st.image(image_path,caption="操作３")
 
-st.sidebar.markdown(\
-"**更新情報**\n \
-- Ver001:2025.2.17\n\
-")

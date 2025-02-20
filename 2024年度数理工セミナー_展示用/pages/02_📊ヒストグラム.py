@@ -32,17 +32,17 @@ else :
 ###------- 共通:カレントディレクトリ情報の取得 End   -------
 
 ##------  共通：データの取得 Begin ------------------------------
-tmp_sidebar_text  = "ヒストグラム作成のオプション"
-tmp_data_path     = "sample_datas/hist_data01.csv"
+tmp_sidebar_text  = "基本統計量計算のオプション"
+tmp_data_path     = "sample_datas/scatter_data01.csv"
 tmp_data_encoding = 'shift_jis'
-
+tmp_data_dict     = {"デモデータ１":0}   
 ##  自作関数
 read_data_df = Df.data_load_form(sidebar_text=tmp_sidebar_text
                             , cd_path=tmp_cd_path
                             , data_path= tmp_data_path
-                            , data_encoding=tmp_data_encoding)
+                            , data_encoding=tmp_data_encoding
+                            , data_dict = tmp_data_dict)
 ##------  共通：データの取得 End   ------------------------------
-
 st.sidebar.divider()
 #===============================================================================================    
 # 分析データ列の選択
@@ -69,9 +69,6 @@ st.success(f'準備完了', icon="✅")
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import norm
-
-
-
 
 st.subheader(f"Step２: ヒストグラムの作成", divider="green")
 bins_dict = {"Sturges’ Rule":1,"Scott’s Rule":2,"ユーザー設定":99}
