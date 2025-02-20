@@ -69,6 +69,13 @@ st.success(f'準備完了', icon="✅")
 
 
 ## Step 2 #### 
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import norm
+
+
+
+
 st.subheader(f"Step２: ヒストグラムの作成", divider="green")
 bins_dict = {"Sturges’ Rule":1,"Scott’s Rule":2,"ユーザー設定":99}
 select_bins_str =st.sidebar.radio(label=":arrow_forward: bin数（階級の数）の設定方法"
@@ -83,8 +90,45 @@ elif select_bins_num == 99:
     bin_num = st.sidebar.number_input("ビン数を設定",min_value=1,value=int(1 + np.log2(len(data_df.to_numpy()))))
 
 st.sidebar.write(f"{select_bins_str} で得られたbin数 = {bin_num}")
-st.sidebar.divider()
+
 
 # ヒストグラムの作成
 ax = data_df.plot.hist(bins=bin_num,rwidth=0.9,alpha=0.5)
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import streamlit as st
+from scipy.stats import norm
+
+st.sidebar.divider()
+add_legend_cb = st.sidebar.checkbox("凡例の表示",value=True)
+# ヒストグラムの描画（色を取得するために一旦プロット）
+ax = data_df.plot.hist(  bins=bin_num
+                       , rwidth=0.9
+                       , alpha=0.5
+                       , density=True
+                       , edgecolor='black'
+                       , legend=add_legend_cb)
+# ヒストグラムの色を取得
+handles, labels = ax.get_legend_handles_labels()
+colors = [h.get_facecolor() for h in handles] 
+# st.write(colors)
+
+st.sidebar.divider()
+add_norm_cb = st.sidebar.checkbox("正規分布のグラフを描画",value=False)
+st.sidebar.write("ヒストグラムに使用しているデータの平均と標準偏差を使用した正規分布を重ねてプロットします．")
+if add_norm_cb :
+    # 各列のヒストグラムの色を取得して正規分布をプロット
+    for i, col in enumerate(data_df.columns):
+        a = data_df[col].mean()
+        b = data_df[col].std()
+        x = np.linspace(data_df[col].min(), data_df[col].max(), 100)
+        y = norm.pdf(x, loc=a, scale=b)
+        plt.plot(x, y, color=colors[i], linewidth=2, label=f'{col} ( $N({a:.1f}$, ${b:.1f}^2)$)')
+
+    if add_legend_cb:
+        plt.legend()
+
 st.pyplot(ax.figure)
+
