@@ -6,10 +6,10 @@ def data_load_form(sidebar_text, cd_path, data_path ,data_dict):
     #=====使用データの設定=====================================================================
     st.sidebar.subheader(sidebar_text)
     st.sidebar.markdown(":arrow_forward: 分析に使用するデータの選択")
-    tub_dict = {"分析体験デモデータ":0,"ユーザーデータ":1}
+    tub_dict = {"擬似データ":0,"ユーザーデータ":1}
     selected_cbox = st.sidebar.radio(label="選択", options = tub_dict.keys(),horizontal=True)
     """ """
-    ###  デモデータによる分析体験
+    ###  擬似データによる分析体験
     tub_counta = 0
     if tub_dict[selected_cbox] == 0 :
         tub_title = list(tub_dict.keys())[tub_counta]
@@ -40,30 +40,40 @@ def data_load_form(sidebar_text, cd_path, data_path ,data_dict):
         st.header(f""":bar_chart: {tub_title }を用いた分析""",divider="rainbow")
         """   """
         st.subheader(f"Step１: 分析データのアップロード", divider="green")
-        
-        disp_col0 = st.columns([1,3])
-        with disp_col0[1]:
-            st.warning("データをアップロードする前に，アップロードするデータに個人情報等，取扱に注意しなければならないデータが含まれていないか確認してください．")
-        with disp_col0[0]:
-            tmp_check = st.checkbox("確認しました")
-        st.sidebar.divider()
-
-        if tmp_check:
-            st.divider()
-            uploaded_files = st.sidebar.file_uploader(":arrow_forward: CSVファイルのアップロード")    
-            if not uploaded_files:
-                st.sidebar.error('データがアップロードされていません', icon="⚠️")
-                st.stop()
+        if 'filename' in st.session_state:
+            st.success(f"現在分析に使用しているファイル：{st.session_state.filename}")
+        tmp_dict = { "前回アップロードしたデータを使用し続ける":True
+                    ,"新しいファイルをアップロードする":False}
+        select_radio = st.sidebar.radio("使用するユーザーデータについて"
+                                        ,options=tmp_dict.keys())
+        if  "userdata" in st.session_state and tmp_dict[select_radio]:
+            read_data_df = st.session_state.userdata
         else :
-            st.sidebar.write("停止中")
-            st.stop()
-        
-        st.sidebar.divider()
-        set_encode_list = ["自動","選択","入力"]
-        selected_way = st.sidebar.radio(":arrow_forward: エンコードの指定方法",options=set_encode_list,horizontal=True)
-        import lib.FileProcessing as FileProcessing 
-        read_data_df= FileProcessing.streamlit_uploaded_csv(st_uploaded_files=uploaded_files
-                                                            ,selected_type=selected_way
-                                                            ,DisplayLocation="sidebar")
+            disp_col0 = st.columns([1,3])
+            with disp_col0[1]:
+                st.warning("データをアップロードする前に，アップロードするデータに個人情報等，取扱に注意しなければならないデータが含まれていないか確認してください．")
+            with disp_col0[0]:
+                tmp_check = st.checkbox("確認しました")
+            st.sidebar.divider()
 
+            if tmp_check:
+                st.divider()
+                uploaded_file = st.sidebar.file_uploader(":arrow_forward: CSVファイルのアップロード"
+                                                         ,type="csv")    
+                if not uploaded_file:
+                    st.sidebar.error('データがアップロードされていません', icon="⚠️")
+                    st.stop()
+            else :
+                st.sidebar.write("停止中")
+                st.stop()
+        
+            st.sidebar.divider()
+            set_encode_list = ["自動","選択","入力"]
+            selected_way = st.sidebar.radio(":arrow_forward: エンコードの指定方法",options=set_encode_list,horizontal=True)
+            import lib.FileProcessing as FileProcessing 
+            read_data_df= FileProcessing.streamlit_uploaded_csv(st_uploaded_files=uploaded_file
+                                                                ,selected_type=selected_way
+                                                                ,DisplayLocation="sidebar")
+            st.session_state.userdata = read_data_df
+            st.session_state.filename = uploaded_file.name
     return read_data_df

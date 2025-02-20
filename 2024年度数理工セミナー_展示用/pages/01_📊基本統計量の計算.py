@@ -28,8 +28,8 @@ st.dataframe(table_data_df
 """左側にあるサイドバーで分析に使用するデータを選択してください．選択肢は次の2つです．"""
 leftside, rightside = st.columns([1,1])
 with leftside:
-    with st.expander(label="**分析体験でもデータ**"):
-        """事前に用意されたデータを使用し，このアプリで何ができるのか体験することができます．"""
+    with st.expander(label="**擬似データ**"):
+        """事前に用意された擬似データを使用し，このアプリでできる分析を体験することができます．"""
 with rightside:
     with st.expander(label="**ユーザーデータ**"):
         """
