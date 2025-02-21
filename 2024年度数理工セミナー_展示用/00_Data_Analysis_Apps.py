@@ -22,9 +22,8 @@ st.page_link("pages/03_📊散布図_散布図行列.py", label="散布図また
 st.page_link("pages/04_📊相関係数行列.py", label="相関係数行列の計算へ", icon="📊")
 st.page_link("pages/05_📊偏相関係数行列.py", label="偏相関係数行列の計算へ", icon="📊")
 st.page_link("pages/06_📊線形回帰分析.py", label="線形回帰分析へ", icon="📊")
-
-
-
+""" """
+""" """
 ## URLとQRコードの表示
 st.subheader("Network URL 情報", divider="rainbow")
 from lib import display
@@ -74,3 +73,5 @@ with right_col:
 
 
 
+st.subheader("2024年第2回高大連携定例研究会のWebアプリ", divider="rainbow")
+st.page_link("https://kit-msec-app01-ds.streamlit.app", label="2024年第2回高大連携定例研究会のWebアプリへ",icon="↪️")
