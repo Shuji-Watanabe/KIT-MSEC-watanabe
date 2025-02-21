@@ -34,7 +34,7 @@ def disp_function(index,tmp_array,ntri=10):
                 st.download_button(label="結果のダウンロード",data=data_file ,file_name="download_data.csv",mime="text/csv")
 
 ##### 本文
-"""# データの取得と生成"""
+st.title("データの取得と生成")
 """
 ここでは，分析の演習で使用するためのデモデータの生成を行います．
 ___
