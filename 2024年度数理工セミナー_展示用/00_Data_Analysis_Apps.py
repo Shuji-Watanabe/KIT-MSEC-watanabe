@@ -7,7 +7,8 @@ st.session_state.location_str = location_str
 
 st.sidebar.markdown(\
 "**更新情報**\n \
-- App 1.0:2025.2.20\n\
+- App 1.0:2024.12.20\n\
+- App 1.1:2025.2.20\n\
 ")
 
 # タイトル
