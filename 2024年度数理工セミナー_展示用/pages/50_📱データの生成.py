@@ -9,7 +9,6 @@ path = os.getcwd()
 #### データの作成とその表示
 def data_download(index, data_array,ntri=10):
     if index == 2:
-        df = pd.DataFrame(data=data_array,columns=[tmp_col_name])
         freq, _ = np.histogram(data_array, bins=ntri+1, range=(0, ntri))
         tmp_index = [ num for num in range(0,ntri+1,1)]
         tmp_df = pd.DataFrame({'number of trials':tmp_index,'freq': freq, 'rfreq': freq / ntri})
@@ -157,18 +156,19 @@ selected_type_index = type_dict[ selected_type ]
 ___
 """
 
-tmp_col = st.columns([1,1,1,1]) 
+tmp_col = st.columns([1,1,1,1,1]) 
 if selected_type_index == 1:
     with tmp_col[0]:
         size_int = int(st.text_input(label="サンプル数",value= 500,key="sample size"))
+    with tmp_col[1]:
         rho = float(st.number_input(label="相関係数$~\\rho~$",min_value=-1.0,max_value=1.0,value=0.75)) 
-    with tmp_col[1]: 
+    with tmp_col[2]: 
         d_name_x = st.text_input(label="$~\\rm X~$の名前",value="data X",key="data name of x")
         d_name_y = st.text_input(label="$~\\rm Y~$の名前",value="data Y",key="data name of y")
-    with tmp_col[2]: 
+    with tmp_col[3]: 
         mu_x = float(st.text_input(label="$~\\rm X~$の平均",value=0,key="mean of x"))
         mu_y = float(st.text_input(label="$~\\rm Y~$の平均",value=0,key="mean of y"))
-    with tmp_col[3]:
+    with tmp_col[4]:
         std_x = float(st.text_input(label="$~\\rm X~$の標準偏差",value=1,key="std of x"))
         std_y = float(st.text_input(label="$~\\rm Y~$の標準偏差",value=1,key="std of y"))
 
@@ -220,5 +220,5 @@ if selected_type_index == 1:
         st.info("""
                 標準正規分布に従うデータ$~\\rm X~$を用いて，指定された相関係数となるようにデータ$~\\rm Y~$を生成しています．
                 その後，指定された平均と標準偏差の正規分布となるようにデータ$~\\rm X~$と$~\\rm Y~$をそれぞれ正規化の逆の変換で生成しているため
-                ダウンロードしたデータ$~\\rm X~$と$~\\rm Y~$の平均と標準偏差が指定の値と若干異な．"""
+                ダウンロードしたデータ$~\\rm X~$と$~\\rm Y~$の平均と標準偏差が指定の値と若干異なります．"""
                 )
