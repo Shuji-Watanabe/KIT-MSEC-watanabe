@@ -44,6 +44,11 @@ with col[2]:
     image_path = tmp_path + "/expl_download.003.jpeg"
     st.image(image_path,caption="操作３")
 
+
+st.subheader("2024年度数理工セミナー_展示用のWebアプリ", divider="rainbow")
+st.page_link("https://kit-msec-watanabe-data-analysis-apps.streamlit.app"
+             , label="2024年度数理工セミナー_展示用のWebアプリのWebアプリへ",icon="↪️")
+
 st.sidebar.markdown(\
 "**更新情報**\n \
 - Ver001:2024.9.18\n\
