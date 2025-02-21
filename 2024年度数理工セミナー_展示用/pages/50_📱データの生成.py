@@ -218,7 +218,5 @@ if selected_type_index == 1:
             data_file = df_out.to_csv(index = False).encode('shift_jis')
             st.download_button(label="結果のダウンロード",data=data_file ,file_name="download_data.csv",mime="text/csv")
         st.info("""
-                標準正規分布に従うデータ$~\\rm X~$を用いて，指定された相関係数となるようにデータ$~\\rm Y~$を生成しています．
-                その後，指定された平均と標準偏差の正規分布となるようにデータ$~\\rm X~$と$~\\rm Y~$をそれぞれ正規化の逆の変換で生成しているため
-                ダウンロードしたデータ$~\\rm X~$と$~\\rm Y~$の平均と標準偏差が指定の値と若干異なります．"""
+               ダウンロードしたデータの$~\\rm X~$と$~\\rm Y~$の平均と標準偏差，そして相関係数は指定した値と若干異なります．"""
                 )
