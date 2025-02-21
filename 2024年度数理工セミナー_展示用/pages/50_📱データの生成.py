@@ -34,11 +34,11 @@ def disp_function(index,tmp_array,ntri=10):
                 st.download_button(label="結果のダウンロード",data=data_file ,file_name="download_data.csv",mime="text/csv")
 
 ##### 本文
-st.title("データの取得と生成")
+st.title("データの生成")
 """
 ここでは，分析の演習で使用するためのデモデータの生成を行います．
-___
 """
+st.divider()
 
 ### サンプルデータの生成 : １次配列###
 st.header(":desktop_computer: 分析データの生成：１次配列",divider="rainbow")
@@ -137,24 +137,23 @@ elif selected_type_index == 2:
 
 """___"""
 ### サンプルデータの生成 : ２次配列###
-st.header("3. 分析用デモデータの生成",divider="rainbow")
+st.header(f":desktop_computer: 相関がある２つデータの生成",divider="rainbow")
 np.set_printoptions(precision=5)
 
 type_dict = {"正規分布に従うデータ":1}
 
 type_keys = type_dict.keys()
-selected_type = st.selectbox(label="生成するデータの分布をしていしてください．",options=type_keys, key="makedata2")
+selected_type = "正規分布に従うデータ"
 selected_type_index = type_dict[ selected_type ]
 """ """
 """ """
-
-
-f"""#### {selected_type}の生成（2次配列）"""
 """
-
-平均 $~\\mu_{\\rm x}~$，標準偏差$~\\sigma_{\\rm x}~$の正規分布に従うサンプル数$~n~$のデータ$~X~$と，
-相関係数が$~\\rho~$となるような，
-平均 $~\\mu_{\\rm y}~$，標準偏差$~\\sigma_{\\rm y}~$に正規分布に従うサンプル数$~n~$のデータ$~Y~$を生成します．
+- **データ$~X~$** \n
+    平均 $~\\mu_{\\rm x}~$，標準偏差$~\\sigma_{\\rm x}~$の正規分布に従うサンプル数$~n~$のデータ
+- **データ$~Y~$** \n
+    平均 $~\\mu_{\\rm y}~$，標準偏差$~\\sigma_{\\rm y}~$に正規分布に従うサンプル数$~n~$のデータ
+- **データ$~X~,\ ~Y~$の関係** \n
+    相関係数=$~\\rho~$
 ___
 """
 
