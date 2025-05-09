@@ -315,3 +315,43 @@ if st.button("データ生成（複数列）", key="generate_multi_uniform"):
 
     data_file = df_multi.to_csv(index=False).encode("shift_jis")
     st.download_button(label="CSVダウンロード", data=data_file, file_name="multi_uniform_data.csv", mime="text/csv")
+
+
+st.header("5. 正規分布の複数列データ生成", divider="rainbow")
+
+col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
+with col1:
+    row_num = int(st.text_input("データ数（行数）", value=10, key="row_num_normal"))
+with col2:
+    col_num = int(st.text_input("列数", value=3, key="col_num_normal"))
+with col3:
+    mean_val = float(st.text_input("平均", value=0, key="mean_val_normal"))
+with col4:
+    std_val = float(st.text_input("標準偏差", value=1, key="std_val_normal"))
+
+base_name_norm = st.text_input("列名のベース（例：data → data1, data2...）", value="data", key="base_name_normal")
+
+if std_val <= 0:
+    st.error("標準偏差は0より大きくしてください。")
+    st.stop()
+
+if st.button("データ生成（正規分布, 複数列）", key="generate_multi_normal"):
+    data = np.random.normal(mean_val, std_val, size=(row_num, col_num))
+    col_names = [f"{base_name_norm}{i+1}" for i in range(col_num)]
+    df_multi = pd.DataFrame(data, columns=col_names)
+
+    st.dataframe(df_multi)
+
+    # グラフ表示：3列ずつ横並び
+    for i in range(0, col_num, 3):
+        sub_cols = st.columns(3)
+        for j in range(3):
+            if i + j < col_num:
+                with sub_cols[j]:
+                    fig, ax = plt.subplots()
+                    df_multi[col_names[i + j]].plot.hist(bins=10, rwidth=0.9, ax=ax)
+                    ax.set_title(col_names[i + j])
+                    st.pyplot(fig)
+
+    data_file = df_multi.to_csv(index=False).encode("shift_jis")
+    st.download_button(label="CSVダウンロード", data=data_file, file_name="multi_normal_data.csv", mime="text/csv")
