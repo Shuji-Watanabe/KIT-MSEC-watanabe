@@ -275,3 +275,43 @@ if selected_type_index == 1:
                 その後，指定された平均と標準偏差の正規分布となるようにデータ$~\\rm X~$と$~\\rm Y~$をそれぞれ正規化の逆の変換で生成しているため
                 ダウンロードしたデータ$~\\rm X~$と$~\\rm Y~$の平均と標準偏差が指定の値と若干異な．"""
                 )
+        
+
+st.header("4. 一様分布の複数列データ生成", divider="rainbow")
+
+col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
+with col1:
+    row_num = int(st.text_input("データ数（行数）", value=10, key="row_num_multi"))
+with col2:
+    col_num = int(st.text_input("列数", value=3, key="col_num_multi"))
+with col3:
+    min_val = float(st.text_input("最小値", value=0, key="min_val_multi"))
+with col4:
+    max_val = float(st.text_input("最大値", value=10, key="max_val_multi"))
+
+base_name = st.text_input("列名のベース（例：data → data1, data2...）", value="data", key="base_name_multi")
+
+if max_val <= min_val:
+    st.error("最小値 < 最大値となるように入力してください。")
+    st.stop()
+
+if st.button("データ生成（複数列）", key="generate_multi_uniform"):
+    data = np.random.uniform(min_val, max_val, size=(row_num, col_num))
+    col_names = [f"{base_name}{i+1}" for i in range(col_num)]
+    df_multi = pd.DataFrame(data, columns=col_names)
+
+    st.dataframe(df_multi)
+
+    # グラフ表示：3列ずつ横並び
+    for i in range(0, col_num, 3):
+        sub_cols = st.columns(3)
+        for j in range(3):
+            if i + j < col_num:
+                with sub_cols[j]:
+                    fig, ax = plt.subplots()
+                    df_multi[col_names[i + j]].plot.hist(bins=10, rwidth=0.9, ax=ax)
+                    ax.set_title(col_names[i + j])
+                    st.pyplot(fig)
+
+    data_file = df_multi.to_csv(index=False).encode("shift_jis")
+    st.download_button(label="CSVダウンロード", data=data_file, file_name="multi_uniform_data.csv", mime="text/csv")
