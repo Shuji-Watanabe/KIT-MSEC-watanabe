@@ -275,3 +275,80 @@ if selected_type_index == 1:
                 その後，指定された平均と標準偏差の正規分布となるようにデータ$~\\rm X~$と$~\\rm Y~$をそれぞれ正規化の逆の変換で生成しているため
                 ダウンロードしたデータ$~\\rm X~$と$~\\rm Y~$の平均と標準偏差が指定の値と若干異な．"""
                 )
+        
+
+st.header("6. 複数列データの生成（分布選択）", divider="rainbow")
+
+dist_type = st.selectbox("分布の種類を選択", ["一様分布", "正規分布"], key="multi_dist_type")
+
+# 共通入力
+col_common = st.columns(2)
+with col_common[0]:
+    row_num = int(st.text_input("データ数（行数）", value=10, key="row_num_dist"))
+with col_common[1]:
+    base_name = st.text_input("列名のベース（例：data → data1, data2...）", value="data", key="base_name_dist")
+
+# 各分布固有の入力
+if dist_type == "一様分布":
+    col_input = st.columns(3)
+    with col_input[0]:
+        col_num = int(st.text_input("列数", value=3, key="col_num_uniform"))
+    with col_input[1]:
+        min_val = float(st.text_input("最小値", value=0, key="min_val_uniform"))
+    with col_input[2]:
+        max_val = float(st.text_input("最大値", value=10, key="max_val_uniform"))
+
+    if max_val <= min_val:
+        st.error("最小値 < 最大値となるように入力してください。")
+        st.stop()
+
+    if st.button("一様分布でデータ生成", key="generate_uniform_dist"):
+        data = np.random.uniform(min_val, max_val, size=(row_num, col_num))
+        col_names = [f"{base_name}{i+1}" for i in range(col_num)]
+        df = pd.DataFrame(data, columns=col_names)
+        st.dataframe(df)
+
+        for i in range(0, col_num, 3):
+            sub_cols = st.columns(3)
+            for j in range(3):
+                if i + j < col_num:
+                    with sub_cols[j]:
+                        fig, ax = plt.subplots()
+                        df[col_names[i + j]].plot.hist(bins=10, rwidth=0.9, ax=ax)
+                        ax.set_title(col_names[i + j])
+                        st.pyplot(fig)
+
+        csv = df.to_csv(index=False).encode("shift_jis")
+        st.download_button("CSVダウンロード", data=csv, file_name="multi_uniform_data.csv", mime="text/csv")
+
+elif dist_type == "正規分布":
+    col_input = st.columns(3)
+    with col_input[0]:
+        col_num = int(st.text_input("列数", value=3, key="col_num_normal"))
+    with col_input[1]:
+        mean_val = float(st.text_input("平均", value=0, key="mean_val_normal"))
+    with col_input[2]:
+        std_val = float(st.text_input("標準偏差", value=1, key="std_val_normal"))
+
+    if std_val <= 0:
+        st.error("標準偏差は0より大きくしてください。")
+        st.stop()
+
+    if st.button("正規分布でデータ生成", key="generate_normal_dist"):
+        data = np.random.normal(mean_val, std_val, size=(row_num, col_num))
+        col_names = [f"{base_name}{i+1}" for i in range(col_num)]
+        df = pd.DataFrame(data, columns=col_names)
+        st.dataframe(df)
+
+        for i in range(0, col_num, 3):
+            sub_cols = st.columns(3)
+            for j in range(3):
+                if i + j < col_num:
+                    with sub_cols[j]:
+                        fig, ax = plt.subplots()
+                        df[col_names[i + j]].plot.hist(bins=10, rwidth=0.9, ax=ax)
+                        ax.set_title(col_names[i + j])
+                        st.pyplot(fig)
+
+        csv = df.to_csv(index=False).encode("shift_jis")
+        st.download_button("CSVダウンロード", data=csv, file_name="multi_normal_data.csv", mime="text/csv")
