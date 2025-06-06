@@ -277,18 +277,44 @@ if selected_type_index == 1:
                 )
         
 
+# --- 6. 複数列データの生成（分布選択） ------------------------------------
 st.header("6. 複数列データの生成（分布選択）", divider="rainbow")
 
-dist_type = st.selectbox("分布の種類を選択", ["一様分布", "正規分布"], key="multi_dist_type")
+# 追加した 6 種類
+dist_type = st.selectbox(
+    "分布の種類を選択",
+    ["一様分布", "正規分布", "二項分布", "ポアソン分布", "t 分布", "カイ２乗分布"],
+    key="multi_dist_type"
+)
 
 # 共通入力
 col_common = st.columns(2)
 with col_common[0]:
     row_num = int(st.text_input("データ数（行数）", value=10, key="row_num_dist"))
 with col_common[1]:
-    base_name = st.text_input("列名のベース（例：data → data1, data2...）", value="data", key="base_name_dist")
+    base_name = st.text_input("列名のベース（例：data → data1, data2...）",
+                              value="data", key="base_name_dist")
 
-# 各分布固有の入力
+# ---------------------------------------------------------------------------
+# 分布ごとの入力・生成処理
+# ---------------------------------------------------------------------------
+def make_dataframe(arr, n_col):
+    col_names = [f"{base_name}{i+1}" for i in range(n_col)]
+    return pd.DataFrame(arr, columns=col_names)
+
+def show_histograms(df):
+    col_num = df.shape[1]
+    for i in range(0, col_num, 3):
+        sub_cols = st.columns(3)
+        for j in range(3):
+            if i + j < col_num:
+                with sub_cols[j]:
+                    fig, ax = plt.subplots()
+                    df.iloc[:, i + j].plot.hist(bins=10, rwidth=0.9, ax=ax)
+                    ax.set_title(df.columns[i + j])
+                    st.pyplot(fig)
+
+# ---------- 一様分布 ----------
 if dist_type == "一様分布":
     col_input = st.columns(3)
     with col_input[0]:
@@ -299,28 +325,19 @@ if dist_type == "一様分布":
         max_val = float(st.text_input("最大値", value=10, key="max_val_uniform"))
 
     if max_val <= min_val:
-        st.error("最小値 < 最大値となるように入力してください。")
+        st.error("最小値 < 最大値 となるように入力してください。")
         st.stop()
 
     if st.button("一様分布でデータ生成", key="generate_uniform_dist"):
         data = np.random.uniform(min_val, max_val, size=(row_num, col_num))
-        col_names = [f"{base_name}{i+1}" for i in range(col_num)]
-        df = pd.DataFrame(data, columns=col_names)
+        df = make_dataframe(data, col_num)
         st.dataframe(df)
-
-        for i in range(0, col_num, 3):
-            sub_cols = st.columns(3)
-            for j in range(3):
-                if i + j < col_num:
-                    with sub_cols[j]:
-                        fig, ax = plt.subplots()
-                        df[col_names[i + j]].plot.hist(bins=10, rwidth=0.9, ax=ax)
-                        ax.set_title(col_names[i + j])
-                        st.pyplot(fig)
-
+        show_histograms(df)
         csv = df.to_csv(index=False).encode("shift_jis")
-        st.download_button("CSVダウンロード", data=csv, file_name="multi_uniform_data.csv", mime="text/csv")
+        st.download_button("CSV ダウンロード", data=csv,
+                           file_name="multi_uniform_data.csv", mime="text/csv")
 
+# ---------- 正規分布 ----------
 elif dist_type == "正規分布":
     col_input = st.columns(3)
     with col_input[0]:
@@ -331,24 +348,100 @@ elif dist_type == "正規分布":
         std_val = float(st.text_input("標準偏差", value=1, key="std_val_normal"))
 
     if std_val <= 0:
-        st.error("標準偏差は0より大きくしてください。")
+        st.error("標準偏差は 0 より大きくしてください。")
         st.stop()
 
     if st.button("正規分布でデータ生成", key="generate_normal_dist"):
         data = np.random.normal(mean_val, std_val, size=(row_num, col_num))
-        col_names = [f"{base_name}{i+1}" for i in range(col_num)]
-        df = pd.DataFrame(data, columns=col_names)
+        df = make_dataframe(data, col_num)
         st.dataframe(df)
-
-        for i in range(0, col_num, 3):
-            sub_cols = st.columns(3)
-            for j in range(3):
-                if i + j < col_num:
-                    with sub_cols[j]:
-                        fig, ax = plt.subplots()
-                        df[col_names[i + j]].plot.hist(bins=10, rwidth=0.9, ax=ax)
-                        ax.set_title(col_names[i + j])
-                        st.pyplot(fig)
-
+        show_histograms(df)
         csv = df.to_csv(index=False).encode("shift_jis")
-        st.download_button("CSVダウンロード", data=csv, file_name="multi_normal_data.csv", mime="text/csv")
+        st.download_button("CSV ダウンロード", data=csv,
+                           file_name="multi_normal_data.csv", mime="text/csv")
+
+# ---------- 二項分布 ----------
+elif dist_type == "二項分布":
+    col_input = st.columns(3)
+    with col_input[0]:
+        col_num = int(st.text_input("列数", value=3, key="col_num_binom"))
+    with col_input[1]:
+        trials = int(st.text_input("試行回数 n", value=10, key="trials_binom"))
+    with col_input[2]:
+        prob = float(st.text_input("成功確率 p", value=0.5, key="prob_binom"))
+
+    if not (0 <= prob <= 1):
+        st.error("成功確率 p は 0〜1 の範囲で指定してください。")
+        st.stop()
+
+    if st.button("二項分布でデータ生成", key="generate_binom_dist"):
+        data = np.random.binomial(trials, prob, size=(row_num, col_num))
+        df = make_dataframe(data, col_num)
+        st.dataframe(df)
+        show_histograms(df)
+        csv = df.to_csv(index=False).encode("shift_jis")
+        st.download_button("CSV ダウンロード", data=csv,
+                           file_name="multi_binom_data.csv", mime="text/csv")
+
+# ---------- ポアソン分布 ----------
+elif dist_type == "ポアソン分布":
+    col_input = st.columns(2)
+    with col_input[0]:
+        col_num = int(st.text_input("列数", value=3, key="col_num_poisson"))
+    with col_input[1]:
+        lam = float(st.text_input("平均 λ", value=3, key="lam_poisson"))
+
+    if lam <= 0:
+        st.error("λ は 0 より大きくしてください。")
+        st.stop()
+
+    if st.button("ポアソン分布でデータ生成", key="generate_poisson_dist"):
+        data = np.random.poisson(lam, size=(row_num, col_num))
+        df = make_dataframe(data, col_num)
+        st.dataframe(df)
+        show_histograms(df)
+        csv = df.to_csv(index=False).encode("shift_jis")
+        st.download_button("CSV ダウンロード", data=csv,
+                           file_name="multi_poisson_data.csv", mime="text/csv")
+
+# ---------- t 分布 ----------
+elif dist_type == "t 分布":
+    col_input = st.columns(2)
+    with col_input[0]:
+        col_num = int(st.text_input("列数", value=3, key="col_num_t"))
+    with col_input[1]:
+        df_t = float(st.text_input("自由度 ν", value=10, key="df_t"))
+
+    if df_t <= 0:
+        st.error("自由度 ν は 0 より大きくしてください。")
+        st.stop()
+
+    if st.button("t 分布でデータ生成", key="generate_t_dist"):
+        data = np.random.standard_t(df_t, size=(row_num, col_num))
+        df = make_dataframe(data, col_num)
+        st.dataframe(df)
+        show_histograms(df)
+        csv = df.to_csv(index=False).encode("shift_jis")
+        st.download_button("CSV ダウンロード", data=csv,
+                           file_name="multi_t_data.csv", mime="text/csv")
+
+# ---------- カイ２乗分布 ----------
+elif dist_type == "カイ２乗分布":
+    col_input = st.columns(2)
+    with col_input[0]:
+        col_num = int(st.text_input("列数", value=3, key="col_num_chi2"))
+    with col_input[1]:
+        df_c2 = float(st.text_input("自由度 k", value=5, key="df_c2"))
+
+    if df_c2 <= 0:
+        st.error("自由度 k は 0 より大きくしてください。")
+        st.stop()
+
+    if st.button("カイ２乗分布でデータ生成", key="generate_chi2_dist"):
+        data = np.random.chisquare(df_c2, size=(row_num, col_num))
+        df = make_dataframe(data, col_num)
+        st.dataframe(df)
+        show_histograms(df)
+        csv = df.to_csv(index=False).encode("shift_jis")
+        st.download_button("CSV ダウンロード", data=csv,
+                           file_name="multi_chi2_data.csv", mime="text/csv")
