@@ -12,7 +12,8 @@ st.sidebar.markdown(\
 ")
 
 # タイトル
-main_title = "データ分析支援アプリ:male-teacher:"
+# main_title = "データ分析支援アプリ:male-teacher:"
+main_title = "データ分析支援アプリ"
 st.title(f"{main_title}")
 
 # st.page_link("00_Data_Analysis_Apps.py", label="Home", icon="🏠")
