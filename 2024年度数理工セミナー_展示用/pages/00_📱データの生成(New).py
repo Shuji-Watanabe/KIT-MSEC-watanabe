@@ -100,8 +100,8 @@ st.divider()
 st.header(":desktop_computer: 分析データの生成：１次配列",divider="rainbow")
 np.set_printoptions(precision=5)
 
-type_dict = {"一様分布":0
-             ,"正規分布":1
+type_dict = { "正規分布":1
+             ,"一様分布":0
              ,"二項分布":2
              ,"ポアソン分布":3
             #  ,"t 分布" :4

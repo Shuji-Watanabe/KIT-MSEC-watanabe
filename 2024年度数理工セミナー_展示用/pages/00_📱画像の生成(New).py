@@ -15,9 +15,9 @@ st.header("確率分布の画像生成", divider="rainbow")
 """
 
 # ---------- 分布・フォーマット選択 ----------
-dist_options = [  "正規分布", "一様分布"
-                , "二項分布", "ポアソン分布"
-                , "t 分布", "カイ２乗分布"]
+dist_options = ["二項分布", "ポアソン分布",
+                "一様分布", "正規分布",
+                "t 分布", "カイ２乗分布"]
 fmt_options  = ["PNG", "TIFF", "JPEG", "SVG"]
 
 sel_cols = st.columns([2, 1])
