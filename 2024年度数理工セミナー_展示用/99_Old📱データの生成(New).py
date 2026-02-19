@@ -43,8 +43,12 @@ st.divider()
 st.header(":desktop_computer: 分析データの生成：１次配列",divider="rainbow")
 np.set_printoptions(precision=5)
 
-type_dict = {"一様分布に従うデータ":0
-             ,"正規分布に従うデータ":1
+type_dict = {"一様分布":0
+             ,"正規分布":1
+             ,"二項分布":2
+             ,"ポアソン分布":3
+            #  ,"t 分布" :4
+            #  ,"カイ２乗分布":5
              }
 
 type_keys = type_dict.keys()
@@ -100,7 +104,7 @@ if selected_type_index == 0:
 
 elif selected_type_index == 1:
     """
-    指定された平均と標準偏差で得られる正規分布に従う数値を，指定されたデータ数で生成します．
+    指定された平均と標準偏差で定まる正規分布に従う乱数データを，指定されたデータ数だけ生成します．
     """
     tmp_col = st.columns([1,1,1,1])
     with tmp_col[0]:
@@ -116,7 +120,7 @@ elif selected_type_index == 1:
 
 elif selected_type_index == 2:
     """
-    指定された試行回数と成功確率で得られる二項分布に従う数値を，指定されたデータ数で生成します．
+    指定された試行回数と成功確率に基づく二項分布に従う乱数データを，指定されたデータ数だけ生成します．
     """
     tmp_col = st.columns([1,1,1,1])
     with tmp_col[0]:
@@ -129,10 +133,23 @@ elif selected_type_index == 2:
         p_num = float(st.text_input(label="成功確率",value=0.5))
     if 0<= p_num <=1 :
         tmp_data_array = np.random.binomial(trials_num,p_num,size_int)
-        disp_function(index=selected_type_index,tmp_array=tmp_data_array,ntri=trials_num )
+        disp_function(selected_type_index,tmp_data_array)
     else :
         st.error("成功確率は0から1の範囲で指定してください．")
-
+    
+elif selected_type_index == 3:
+    """
+    指定された発生率（$\lambda$）をもつポアソン分布に従う乱数データを，指定した個数だけ生成します．
+    """
+    tmp_col = st.columns([1,1,1,1])
+    with tmp_col[0]:
+        tmp_col_name = str(st.text_input("データ名",value="data 1"))
+    with tmp_col[1]:
+        size_int = int(st.text_input(label="データ数",value=10))
+    with tmp_col[2]: 
+        p_num = float(st.text_input(label="発生率",value=1.2))
+    tmp_data_array = np.random.poisson(p_num, size=(size_int, 1))
+    disp_function(index=selected_type_index,tmp_array=tmp_data_array )
 
 """___"""
 ### サンプルデータの生成 : ２次配列###
