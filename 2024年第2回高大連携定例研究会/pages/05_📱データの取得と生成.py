@@ -278,7 +278,7 @@ if selected_type_index == 1:
         
 
 # --- 6. 複数列データの生成（分布選択） ------------------------------------
-st.header("6. 複数列データの生成（分布選択）", divider="rainbow")
+st.header("4. 複数列データの生成（分布選択）", divider="rainbow")
 
 # 追加した 6 種類
 dist_type = st.selectbox(

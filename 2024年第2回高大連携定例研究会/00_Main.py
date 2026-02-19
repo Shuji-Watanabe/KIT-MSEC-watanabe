@@ -51,6 +51,8 @@ st.page_link("https://kit-msec-watanabe-data-analysis-apps.streamlit.app"
 
 st.sidebar.markdown(\
 "**更新情報**\n \
-- Ver001:2024.9.18\n\
-- Ver002:2025.2.17\n\
+- Ver1.0:2024.9.18\n\
+- Ver1.1:2025.2.17\n\
+- Ver1.2:2025.6.6\n\
+- Ver1.3:2026.2.19\n\
 ")
