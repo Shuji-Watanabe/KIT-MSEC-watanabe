@@ -15,16 +15,16 @@ st.header("確率分布の画像生成", divider="rainbow")
 """
 
 # ---------- 分布・フォーマット選択 ----------
-dist_options = ["二項分布", "ポアソン分布",
-                "一様分布", "正規分布",
+dist_options = [ "正規分布", "一様分布"
+                ,"二項分布", "ポアソン分布",
                 "t 分布", "カイ２乗分布"]
 fmt_options  = ["PNG", "TIFF", "JPEG", "SVG"]
 
-sel_cols = st.columns([2, 1])
+sel_cols = st.columns([4, 1])
 with sel_cols[0]:
-    dist_name = st.radio("分布の種類", options=dist_options, horizontal=True)
+    dist_name = st.radio("**分布の種類**", options=dist_options, horizontal=True)
 with sel_cols[1]:
-    img_fmt = st.selectbox("画像フォーマット", options=fmt_options)
+    img_fmt = st.selectbox("**画像フォーマット**", options=fmt_options)
 
 st.divider()
 

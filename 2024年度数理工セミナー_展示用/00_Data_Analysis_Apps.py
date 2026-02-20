@@ -20,8 +20,10 @@ st.title(f"{main_title}")
 
 # st.page_link("00_Data_Analysis_Apps.py", label="Home", icon="🏠")
 st.subheader("各分析ツールへ", divider="rainbow")
+st.badge("**NEW**", color="orange")
 st.page_link("pages/00_📱データの生成(New).py", label="データの生成へ", icon="📱")
 st.page_link("pages/00_📱図の生成(New).py", label="図の生成へ", icon="📱")
+""""""
 st.page_link("pages/01_📊基本統計量の計算.py", label="基本統計量の計算へ", icon="📊")
 st.page_link("pages/02_📊Histogram.py", label="ヒストグラムの作成へ", icon="📊")
 st.page_link("pages/03_📊散布図_散布図行列.py", label="散布図または散布図行列の作成へ", icon="📊")
