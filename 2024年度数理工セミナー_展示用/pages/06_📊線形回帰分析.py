@@ -115,12 +115,22 @@ with st.spinner('作成中'):
                 ,value=float(lr_results.loc[0,"adj_r2"].round(r2_digit_num )))
     with disp_col1[1]:
         st.write("#### 偏回帰係数に関する分析")
+
         results_keys_list = list(results_keys_dict.keys())
-        disp_result_df = lr_results[results_keys_list[:7]]
+        cols = [c for c in results_keys_list[:7] if c in lr_results.columns]
+        disp_result_df = lr_results[cols].copy()
         disp_result_df.rename(columns=results_keys_dict, inplace=True)
-        st.dataframe(data=disp_result_df.round(ana_digit_num)
-                    ,hide_index = True
-                    , use_container_width=True)
+        # results_keys_list = list(results_keys_dict.keys())
+        # disp_result_df = lr_results[results_keys_list[:7]]
+        # disp_result_df.rename(columns=results_keys_dict, inplace=True)
+        # st.dataframe(data=disp_result_df.round(ana_digit_num)
+        #             ,hide_index = True
+        #             , use_container_width=True)
+        st.dataframe(
+            data=disp_result_df.round(ana_digit_num),
+            hide_index=True,
+            width="stretch"
+        )
         st.write("＊下限：95%信頼区間の下限，　上限：95%信頼区間の上限 ")
     st.divider()
 
