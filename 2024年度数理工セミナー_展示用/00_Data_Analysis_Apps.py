@@ -32,7 +32,7 @@ st.page_link("pages/05_📊偏相関係数行列.py", label="偏相関係数行�
 st.page_link("pages/06_📊線形回帰分析.py", label="線形回帰分析へ", icon="📊")
 """ """
 """ """
-## URLとQRコードの表示
+## URLと2次元コードの表示
 st.subheader("Network URL 情報", divider="rainbow")
 from lib import display
 from io import BytesIO
@@ -47,7 +47,7 @@ with left_col:
     st.write("現在のアプリのNetwork URL:")
     st.code(network_url)
 with right_col:
-    st.image(img_bytes, caption="QR Code", use_container_width=True)
+    st.image(img_bytes, caption="2次元コード", use_container_width=True)
 
 
 # アプリの説明
