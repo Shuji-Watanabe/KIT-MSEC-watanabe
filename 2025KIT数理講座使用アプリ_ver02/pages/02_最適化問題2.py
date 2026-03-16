@@ -46,34 +46,7 @@ with st.expander("設定の確認・変更") :
             else:   
                 with N_col[1]:
                     st.write(f'$N={st.session_state.N}$を使用')
-    # """ ##### 最急降下法用のパラメータ"""
-    # input_cols = st.columns([1]*4)
-    # with input_cols[0] :
-    #     max_iter    = st.number_input("最大更新回数"
-    #                             , min_value=1
-    #                             , max_value=50000
-    #                             ,value=20000)
-    # with input_cols[1] :
-    #     alpha    = st.number_input("$\\alpha$"
-    #                             , min_value=0.0001
-    #                             , max_value=5
-    #                             , value=20000)
-        
-    #                                           gamma_nodes=1.0,
-    #                                           kappa=2, delta=3,
-    #                                           alpha=3, beta=0.0001,
-    #                                           momentum=0.8,
-    #                                           max_iter=20000, tol=1e-9
-    # """
-    # $$ 
-    # \\mathbf{y}_{i,k+1} = \\mathbf{y}_{i,k} 
-    # - m \\cdot v_{i,k} +\\frac{\\alpha}{1+\\beta \\cdot k}
-    # \\cdot \\frac{1}{1+e^{ - \\kappa\\cdot \\big(x_{i}/x_0 -\\delta\\big) }}
-    # \\cdot 	\\frac{\\partial T}{\\partial y_{i}} \\Big|_{\mathbf{x}=\mathbf{x}_{k-1},\mathbf{y}=\mathbf{y}_{k-1} }
-    # $$
-    # """
-    
-    # with input_cols[0] :
+
            
 # ---------------------------------
 # コア関数定義
